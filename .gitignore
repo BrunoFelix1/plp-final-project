@@ -1,0 +1,87 @@
+# --- Sistema operacional ---
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+$RECYCLE.BIN/
+
+# --- Editores / IDEs ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.iml
+
+# --- Segredos / ambiente local ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# --- Logs e temporários ---
+*.log
+*.tmp
+*.bak
+tmp/
+temp/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+dist/
+build/
+
+# --- Node / JavaScript / TypeScript ---
+node_modules/
+npm-debug.log*
+.next/
+coverage/
+
+# --- Java / Kotlin / Scala ---
+*.class
+*.jar
+target/
+out/
+.gradle/
+.bsp/
+.metals/
+.bloop/
+
+# --- Haskell ---
+dist-newstyle/
+.stack-work/
+*.hi
+*.o
+
+# --- C / C++ ---
+*.obj
+*.exe
+*.out
+*.a
+*.so
+*.dll
+
+# --- Rust ---
+Cargo.lock.bak
+
+# --- Go ---
+bin/
+
+# --- Prolog / Erlang / Elixir ---
+*.beam
+_build/
+deps/
+*.qlf
+
+# --- Documentos temporários (Office/LaTeX) ---
+~$*
+*.aux
+*.toc
+*.synctex.gz
