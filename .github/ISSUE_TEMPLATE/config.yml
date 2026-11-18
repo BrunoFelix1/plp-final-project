@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Board do projeto
+    url: https://github.com/users/BrunoFelix1/projects/3/views/1
+    about: Consulte os tickets, colunas e milestones antes de abrir um novo.
+  - name: Guia do projeto
+    url: https://github.com/BrunoFelix1/plp-final-project/blob/main/README.md
+    about: Leia o README e docs/ antes de contribuir.
