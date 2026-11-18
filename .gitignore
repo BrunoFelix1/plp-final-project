@@ -85,3 +85,20 @@ deps/
 *.aux
 *.toc
 *.synctex.gz
+
+# --- CLite: ferramentas e artefatos locais ---
+.eggs/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.benchmarks/
+*.dot
+
+# Saídas esperadas dos testes de conformidade fazem parte do repositório
+!tests/conformance/*.out
+
+# --- Spec-Kit / agentes: configuração local, não compartilhada ---
+.specify/*.local
+.opencode/*.local
