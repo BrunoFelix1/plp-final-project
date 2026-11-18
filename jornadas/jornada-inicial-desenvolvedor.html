@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CLite · jornada inicial do desenvolvedor (30 min)</title>
+<style>
+:root{
+  color-scheme:light;
+  --primary:#4338CA;--primary-strong:#312E81;--primary-soft:#EEF0FF;
+  --bg:#F6F7FB;--surface:#FFF;--surface-soft:#F1F3FA;
+  --text:#1B2033;--muted:#626B82;--border:#E2E6F0;
+  --ok:#1E9E63;--ok-strong:#14603E;--ok-soft:#E9F8F0;
+  --warn:#B45309;--warn-soft:#FFF4E5;
+  --danger:#B42336;--danger-soft:#FFF0F2;
+  --focus:#4F46E5;--code:#EEF1F8;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  color-scheme:dark;
+  --primary:#A5B4FC;--primary-strong:#E0E7FF;--primary-soft:#232A4D;
+  --bg:#0E1220;--surface:#161B2C;--surface-soft:#1C2236;
+  --text:#E6E9F4;--muted:#9AA4BC;--border:#2A3350;
+  --ok:#5AD39A;--ok-strong:#A7EBC9;--ok-soft:#12301F;
+  --warn:#F5B06A;--warn-soft:#33240F;
+  --danger:#F58A98;--danger-soft:#3A1D29;
+  --focus:#A5B4FC;--code:#1E2540;
+}}
+*{box-sizing:border-box}
+html{scroll-padding-top:96px}
+body{margin:0;padding:0 16px 64px;background:var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:900px;margin:0 auto}
+a{color:var(--primary);text-underline-offset:2px}
+a:focus-visible,button:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+header.top{position:sticky;top:0;z-index:5;background:var(--bg);padding:16px 0 12px;border-bottom:1px solid var(--border);margin-bottom:22px}
+.eyebrow{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:700}
+h1{font-size:27px;line-height:1.2;margin:4px 0 8px;color:var(--primary-strong);text-wrap:balance}
+.lede{color:var(--muted);max-width:75ch;margin:0 0 18px}
+.lede b{color:var(--text)}
+.bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.meter{flex:1 1 240px;height:8px;background:var(--surface-soft);border:1px solid var(--border);border-radius:99px;overflow:hidden}
+.meter i{display:block;height:100%;background:var(--ok);width:0;transition:width .25s}
+.count{font-variant-numeric:tabular-nums;font-weight:700;font-size:14px;white-space:nowrap}
+.sync{font-size:12px;color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--primary-soft);color:var(--primary-strong);border-radius:99px;padding:3px 11px;font-weight:700;font-size:12.5px;white-space:nowrap}
+.agenda{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.agenda span{font-size:12.5px;border:1px solid var(--border);background:var(--surface);border-radius:99px;padding:3px 10px;color:var(--muted)}
+.agenda b{color:var(--text)}
+section.box{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 18px 10px;margin-bottom:18px}
+section.box>h2{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;font-size:19px;margin:0 0 4px;color:var(--primary-strong)}
+.scene-n{font:600 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--primary)}
+.scene-time{margin-left:auto;font-size:12.5px;color:var(--muted);font-weight:600}
+.scene-time.done{color:var(--ok-strong)}
+.who{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:13px;color:var(--muted);margin:6px 0 12px}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--primary-soft);color:var(--primary-strong);border-radius:99px;padding:2px 10px;font-weight:700;font-size:12.5px}
+.callout{border:1px solid var(--border);border-left:4px solid var(--primary);background:var(--surface-soft);border-radius:8px;padding:10px 12px;margin:8px 0 14px;font-size:14px;color:var(--muted)}
+.callout.info{border-left-color:var(--primary)}
+.callout.warn{border-left-color:var(--warn);background:var(--warn-soft);color:var(--warn)}
+.callout.ok{border-left-color:var(--ok);background:var(--ok-soft);color:var(--ok-strong)}
+code,.mono{font:12.5px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--code);border:1px solid var(--border);border-radius:5px;padding:0 5px;overflow-wrap:anywhere}
+.cmd{display:inline-flex;align-items:center;gap:6px;background:var(--code);border:1px solid var(--border);border-radius:7px;padding:4px 7px;margin:2px 0}
+.cmd code{background:none;border:0;padding:0}
+.copy{border:1px solid var(--border);background:var(--surface);color:var(--muted);border-radius:5px;font-size:11px;padding:1px 6px;cursor:pointer}
+.copy:hover{color:var(--text)}
+ol.steps{list-style:none;margin:0;padding:0}
+ol.steps li{padding:11px 0;border-top:1px solid var(--border)}
+ol.steps li:first-child{border-top:0}
+.step{display:flex;gap:11px;align-items:flex-start}
+.step input[type=checkbox]{width:19px;height:19px;margin-top:2px;accent-color:var(--ok);flex:none;cursor:pointer}
+.step .body{flex:1;min-width:0}
+.step .do{font-weight:600;display:block}
+.see{font-size:13px;color:var(--muted);margin-top:3px}
+.see b{color:var(--ok-strong);font-weight:600}
+.opt{display:inline-block;margin-left:6px;font-size:11px;color:var(--warn);border:1px solid currentColor;border-radius:99px;padding:0 6px;vertical-align:1px}
+li.checked .do{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1px}
+li.checked .see{opacity:.7}
+.note-toggle{border:1px solid var(--border);background:var(--surface);color:var(--muted);border-radius:7px;font-size:11.5px;padding:3px 7px;cursor:pointer;white-space:nowrap;flex:none}
+.note-toggle.has{color:var(--ok-strong);border-color:var(--ok);background:var(--ok-soft)}
+textarea{width:100%;margin-top:7px;min-height:58px;resize:vertical;border:1px solid var(--border);background:var(--surface-soft);color:var(--text);border-radius:7px;padding:7px 9px;font:13px/1.45 inherit}
+.foot{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
+button{font:inherit}
+#resetBtn,.danger,#resetNo{border:1px solid var(--border);background:var(--surface);border-radius:7px;padding:4px 10px;cursor:pointer;font-size:13px}
+.danger{color:var(--danger);border-color:var(--danger)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;margin:6px 0 12px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+ul.plain{margin:6px 0 12px;padding-left:20px;color:var(--muted)}
+ul.plain li{margin:4px 0}
+ul.plain b{color:var(--text)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.kbd{font:11.5px ui-monospace,monospace;border:1px solid var(--border);border-bottom-width:2px;border-radius:5px;padding:0 5px;background:var(--surface-soft)}
+@media print{
+  header.top{position:static}
+  .note-toggle,textarea,#resetArea,.copy{display:none!important}
+  body{background:#fff;padding:0}
+  section.box{break-inside:avoid;border-color:#ccc}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow">CLite · onboarding · atualizado em 17/11/2026</div>
+  <h1>Jornada inicial do desenvolvedor</h1>
+  <div class="bar">
+    <div class="meter" id="meter" role="progressbar" aria-label="Progresso da jornada" aria-valuemin="0"><i id="meterFill"></i></div>
+    <span class="count" id="count">0 de 0 passos</span>
+    <span class="sync" id="sync">Salvando neste navegador</span>
+  </div>
+  <div class="agenda" aria-label="Agenda de 30 minutos">
+    <span><b>30 min</b> no total</span>
+    <span>6 etapas</span>
+    <span>parar a qualquer momento</span>
+    <span>Git e uv bastam</span>
+  </div>
+</header>
+
+<p class="lede">
+  Em meia hora você entende <b>o que é CLite</b>, <b>como o repositório está organizado</b>,
+  <b>como o board e os milestones contam a história do projeto</b> e <b>como você aprende
+  enquanto implementa</b>. A jornada é uma checklist: marque cada passo, anote o que não
+  bater e feche com uma decisão — qual ticket você pega agora.
+</p>
+
+<section class="box" aria-labelledby="prep-h">
+  <h2 id="prep-h">Antes de começar</h2>
+  <div class="callout info">
+    <b>Promessa de tempo:</b> 30 minutos para conhecer o projeto, não para implementar.
+    Se um passo abrir uma dúvida grande, anote e siga; a etapa 6 diz onde investigar.
+  </div>
+  <ul class="plain">
+    <li>Tenha o repositório aberto no editor e um terminal na raiz.</li>
+    <li>Pré-requisitos: <b>Git</b> e <b>uv</b>. O <code>uv</code> instala e gerencia o Python 3.12; o interpretador não tem dependências de runtime.</li>
+    <li>Marque os passos e escreva anotações: tudo fica salvo neste navegador (localStorage).</li>
+    <li>Links de documento abrem o Markdown renderizado no GitHub; links de board abrem o Projects oficial.</li>
+  </ul>
+  <ol class="steps" data-scene="prep"></ol>
+</section>
+
+<div id="scenes"></div>
+
+<section class="box" aria-labelledby="end-h">
+  <h2 id="end-h">Fechamento: você está pronto?</h2>
+  <div class="callout ok">
+    Se você consegue responder às cinco perguntas abaixo sem consultar, a jornada cumpriu o objetivo.
+    Se alguma travar, use a anotação para transformar a dúvida em próximo passo.
+  </div>
+  <ol class="steps" data-scene="end"></ol>
+  <div class="foot">
+    <span class="sync">As marcações e anotações ficam neste navegador.</span>
+    <span id="resetArea"><button id="resetBtn" type="button">Desmarcar tudo</button></span>
+  </div>
+</section>
+
+<p class="lede" style="font-size:12.5px;margin-top:18px">
+  Jornada inicial · projeto CLite · fonte da verdade: <a href="https://github.com/BrunoFelix1/plp-final-project/blob/main/AGENTS.md">AGENTS.md</a>
+  e <a href="https://github.com/BrunoFelix1/plp-final-project/tree/main/docs">docs/</a>.
+</p>
+</div>
+
+<script>
+const GUIDE = {
+  storageKey: "clite-jornada-inicial-v1",
+  scenes: [
+    {
+      id: "prep", n: null, title: "", role: "", people: "", minutes: 2,
+      steps: [
+        ["prep-1", "Abra o repositório no editor e confirme que você está na raiz (o arquivo <code>pyproject.toml</code> aparece).", "A pasta tem <b>AGENTS.md</b>, <b>README.md</b>, <b>docs/</b>, <b>src/</b>, <b>tests/</b>, <b>specs/</b> e <b>jornadas/</b>.", false],
+        ["prep-2", "Rode <span class=\"cmd\"><code>uv sync</code><button class=\"copy\" data-copy=\"uv sync\" type=\"button\">copiar</button></span> e depois <span class=\"cmd\"><code>make check</code><button class=\"copy\" data-copy=\"make check\" type=\"button\">copiar</button></span> (no Windows sem <code>make</code>, rode os quatro comandos <code>uv run</code> do README).", "O ambiente sincroniza e o check termina com <b>ruff ok</b>, <b>mypy ok</b> e <b>1 teste passando</b> (o teste de fumaça do esqueleto).", false]
+      ]
+    },
+    {
+      id: "s1", n: "Etapa 1", title: "O que é CLite e por que ele existe", role: "Contexto · 4 min",
+      people: "Leia para entender o produto antes de olhar código.",
+      minutes: 4,
+      steps: [
+        ["s1-1", "No <a href=\"https://github.com/BrunoFelix1/plp-final-project/blob/main/README.md\">README</a>, leia “O que você vai encontrar” e o diagrama de fases.", "Você identifica o fluxo <b>fonte → tokens → AST → tipos → execução</b> e a promessa: aprender como uma linguagem é construída.", false],
+        ["s1-2", "Abra <a href=\"https://github.com/BrunoFelix1/plp-final-project/blob/main/docs/03-arquitetura-frontend.md\">docs/03</a> e localize o diagrama e a tabela “Apêndice A → Python”.", "Fica claro que o projeto é um <b>front-end completo</b> que troca a geração de código por avaliação da AST.", false],
+        ["s1-3", "Leia as decisões aceitas em <a href=\"https://github.com/BrunoFelix1/plp-final-project/blob/main/docs/05-decisoes.md\">docs/05</a> (D-01 a D-15); foque em <b>D-01</b>, <b>D-02</b> e <b>D-04</b>.", "Você sabe por que as palavras-chave são em inglês, por que a AST é dado puro com visitantes e por que existe <code>print</code> — e que todas foram aceitas em 17/11/2026, sem pendências.", false],
+        ["s1-4", "Explique em voz alta, em 60 segundos: “CLite é… e este projeto…”.", "A explicação sai sem ler. Se não sair, volte ao passo 1: ainda é contexto, não código.", false]
+      ]
+    },
+    {
+      id: "s2", n: "Etapa 2", title: "O mapa do repositório", role: "Organização · 5 min",
+      people: "Aprenda onde cada fase mora e onde procurar quando algo falhar.",
+      minutes: 5,
+      steps: [
+        ["s2-1", "Abra <a href=\"https://github.com/BrunoFelix1/plp-final-project/blob/main/docs/README.md\">docs/README.md</a> e percorra o índice.", "São seis documentos: linguagem, OO, arquitetura, plano, decisões e casos difíceis. Cada um tem um papel claro.", false],
+        ["s2-2", "No editor, expanda <code>src/clite/</code>.", "<b>lexer/</b>, <b>parser/</b>, <b>ast/</b>, <b>semantic/</b> e <b>interpreter/</b>, além de <code>errors.py</code>, <code>types.py</code>, <code>values.py</code> e <code>symbols.py</code>.", false],
+        ["s2-3", "Leia <a href=\"https://github.com/BrunoFelix1/plp-final-project/blob/main/AGENTS.md\">AGENTS.md</a> §2 (fonte da verdade) e §4 (regras de implementação).", "Você entende a regra de ouro: <b>gramática documentada antes do código</b> e uma fase nunca importa a outra “de volta”.", false],
+        ["s2-4", "Abra <code>tests/</code>.", "A suíte prevê <b>unit/</b>, <b>conformance/</b> e <b>errors/</b>; conformidade executa programas <code>.clite</code> de ponta a ponta.", false],
+        ["s2-5", "Rode <span class=\"cmd\"><code>uv run pytest -q</code><button class=\"copy\" data-copy=\"uv run pytest -q\" type=\"button\">copiar</button></span>.", "O comando é o mesmo que você vai usar em todo ticket: rápido, sem rede e sem efeitos colaterais.", false]
+      ]
+    },
+    {
+      id: "s3", n: "Etapa 3", title: "Board, milestones e tickets", role: "Planejamento · 5 min",
+      people: "O board é a história do projeto em fatias pequenas; os milestones são os prazos.",
+      minutes: 5,
+      steps: [
+        ["s3-1", "Abra o <a href=\"https://github.com/users/BrunoFelix1/projects/3/views/1\">board do projeto</a>.", "As colunas <b>Backlog → To Do → In Progress → In Review → Ready for QA → In QA → Released</b> e os 36 tickets em Backlog.", false],
+        ["s3-2", "Na aba de milestones, abra <b>M1 · Fundação e léxico</b> (21/11).", "O milestone tem 8 tickets: bootstrap, gramática, arquitetura, CLI, tokens e o lexer dividido em três partes.", false],
+        ["s3-3", "Abra o ticket <b>feat: 001</b> e leia os campos.", "Você reconhece o formato: objetivo, <b>conceito implementado</b>, pronto quando, verificação, <b>atualização da gramática</b> (em OO), paralelismo, fora de escopo, depende de e <b>leitura com livro e seção</b>.", false],
+        ["s3-4", "Abra <b>feat: 006</b> e <b>feat: 007</b>; compare o campo “Paralelismo”.", "Os dois declaram arquivos diferentes e podem rodar juntos; o 008 depende dos dois. É assim que o trabalho paralelo é coordenado.", false],
+        ["s3-5", "Leia <a href=\"https://github.com/BrunoFelix1/plp-final-project/blob/main/docs/04-plano-de-aprendizado.md\">docs/04</a> §3 e §6.", "Você associa cada milestone a uma data e a um checkpoint: 21/11 léxico, 26/11 núcleo, 01/12 conformidade, 04/12 OO, 06/12 entrega.", false]
+      ]
+    },
+    {
+      id: "s4", n: "Etapa 4", title: "Os conceitos que você vai implementar", role: "Linguagens · 6 min",
+      people: "Não é para decorar: é para reconhecer o conceito quando ele aparecer no ticket.",
+      minutes: 6,
+      steps: [
+        ["s4-1", "Em <a href=\"https://github.com/BrunoFelix1/plp-final-project/blob/main/docs/01-linguagem-clite.md\">docs/01</a> §3 e §5, veja a gramática e a tabela de precedência.", "Você entende por que <code>2 + 3 * 4</code> é 14 e por que <code>a &lt; b &lt; c</code> é erro sintático (não-associativo).", false],
+        ["s4-2", "Ainda em docs/01 §4, leia tokens, palavras reservadas e maior casamento.", "Você sabe por que <code>whilea</code> é identificador, por que <code>5.</code> é erro léxico e por que <code>main</code> é reservada em CLite.", false],
+        ["s4-3", "Em docs/01 §7 e §8, leia as regras de tipo e a semântica.", "Você entende por que <code>float x; x = 1;</code> é inválido sem <code>float(1)</code>, e por que usar <code>undef</code> “não tem significado”.", false],
+        ["s4-4", "Abra <a href=\"https://github.com/BrunoFelix1/plp-final-project/blob/main/docs/06-casos-dificeis.md\">docs/06</a> §2 e §3.", "Você reconhece o <code>else</code> pendente, declaração mista, array com tamanho literal e os códigos <code>E2001</code>/<code>E3003</code>.", false],
+        ["s4-5", "Em <a href=\"https://github.com/BrunoFelix1/plp-final-project/blob/main/docs/02-extensao-oo.md\">docs/02</a> §4, leia o modelo de execução OO e a relação com <code>docs/01</code>.", "Você explica a frase-chave: <b>o tipo estático decide o que pode ser chamado; o tipo dinâmico decide qual método roda</b> — e sabe que <code>docs/01</code> é a gramática implementada, <code>docs/02</code> o desenho-alvo, e que cada ticket OO atualiza <code>docs/01</code>.", false],
+        ["s4-6", "Feche com o exemplo do <code>Cachorro</code> em docs/02 §3 e responda: por que o último <code>a.fala()</code> imprime 1?", "Porque <code>a</code> aponta para um objeto <code>Cachorro</code>; o despacho usa a classe dinâmica, não a variável. Se acertou, entendeu polimorfismo.", false]
+      ]
+    },
+    {
+      id: "s5", n: "Etapa 5", title: "Como você aprende enquanto desenvolve", role: "Método · 5 min",
+      people: "O objetivo prioritário do projeto é aprendizado; o processo foi desenhado para isso.",
+      minutes: 5,
+      steps: [
+        ["s5-1", "Leia o ritual de seis passos em <a href=\"https://github.com/BrunoFelix1/plp-final-project/blob/main/docs/04-plano-de-aprendizado.md\">docs/04</a> §1.", "Você sabe que cada ticket começa com leitura, explicação em voz alta, implementação mínima, teste, quebra proposital e registro do aprendizado.", false],
+        ["s5-2", "Percorra a tabela “conceito → pergunta” em docs/04 §7.", "Cada conceito tem uma pergunta que você deve conseguir responder; é o seu critério de “aprendi de verdade”.", false],
+        ["s5-3", "Leia o <a href=\"https://github.com/BrunoFelix1/plp-final-project/blob/main/docs/agents/ticket-format.md\">formato de ticket</a> e o <a href=\"https://github.com/BrunoFelix1/plp-final-project/blob/main/docs/agents/pull-request.md\">formato de PR</a>.", "Você entende que todo PR executa <code>make check</code>, cola o resultado e escreve 3 linhas de aprendizado; tickets OO também atualizam <code>docs/01</code> no mesmo PR.", false],
+        ["s5-4", "Confira a definição de pronto em AGENTS.md §10.", "Cinco itens objetivos: teste, check verde, <code>docs/01</code> atualizado, PR com comando e board atualizado.", false],
+        ["s5-5", "Escolha sua trilha: <b>A</b> linguagem (001/005), <b>B</b> qualidade (002/003) ou <b>C</b> conhecimento (docs).", "Você sabe qual ticket pega primeiro e por quê; as trilhas podem rodar em paralelo sem editar os mesmos arquivos.", false]
+      ]
+    },
+    {
+      id: "s6", n: "Etapa 6", title: "Seu primeiro movimento", role: "Ação · 3 min",
+      people: "A jornada termina com uma decisão pequena e concreta, não com uma leitura a mais.",
+      minutes: 3,
+      steps: [
+        ["s6-1", "Abra o ticket escolhido e copie a seção “Leitura” para a sua anotação.", "Você tem o trecho exato do livro/documento que sustenta a implementação — sem precisar ler o capítulo inteiro.", false],
+        ["s6-2", "Crie a branch no formato <span class=\"cmd\"><code>git switch -c feat/001-bootstrap</code><button class=\"copy\" data-copy=\"git switch -c feat/001-bootstrap\" type=\"button\">copiar</button></span> (ajuste tipo e número).", "A branch existe e você ainda não escreveu código: primeiro vem o teste ou a leitura, conforme o ticket.", false],
+        ["s6-3", "Escreva na anotação do último passo: “Nas próximas 2 h eu vou…”.", "A frase tem um verbo verificável (ler X, escrever teste Y, rodar comando Z), não “estudar o projeto”.", false]
+      ]
+    },
+    {
+      id: "end", n: null, title: "", role: "", people: "", minutes: 0,
+      steps: [
+        ["end-1", "Sem consultar: quais são as quatro fases do pipeline e o que cada uma recebe e entrega?", "Você nomeia <b>lexer</b>, <b>parser</b>, <b>checker</b> e <b>interpretador</b> com entrada e saída.", false],
+        ["end-2", "Sem consultar: qual a diferença entre token e lexema? Dê um exemplo com <code>whilea</code>.", "Token é a categoria (<b>IDENTIFIER</b>); lexema é o texto (<code>whilea</code>). Maior casamento explica por que não é <code>while</code> + <code>a</code>.", false],
+        ["end-3", "Sem consultar: por que o board tem Ready for QA e In QA, e não só Done?", "Porque merge não é entrega verificada: o ticket só é Released depois que alguém executou o roteiro de QA.", false],
+        ["end-4", "Sem consultar: qual comando prova que seu incremento não quebrou a <code>main</code>?", "<code>make check</code> (ruff + mypy + pytest), o mesmo que o CI executa.", false],
+        ["end-5", "Anote a maior dúvida que ficou e o ticket que pretende pegar.", "A dúvida virou um próximo passo rastreável; se for dúvida de linguagem, ela provavelmente vira linha em docs/06 ou um ticket <code>docs:</code>.", false]
+      ]
+    }
+  ]
+};
+
+const SCENES = GUIDE.scenes;
+const ALL = SCENES.flatMap(s => s.steps.map(st => st[0]));
+const KEY = GUIDE.storageKey;
+let state = {done: {}, notes: {}};
+let save = () => {};
+
+function stepHTML(st) {
+  const [id, action, expected, optional] = st;
+  const checked = !!state.done[id];
+  const note = state.notes[id] || "";
+  return `<li class="${checked ? "checked" : ""}" data-id="${id}">
+    <div class="step">
+      <input type="checkbox" id="cb-${id}" ${checked ? "checked" : ""} aria-labelledby="do-${id}" aria-describedby="see-${id}">
+      <div class="body">
+        <div class="do" id="do-${id}">${action}${optional ? '<span class="opt">opcional</span>' : ""}</div>
+        ${expected && expected !== "—" ? `<div class="see" id="see-${id}"><b>Você vê:</b> ${expected}</div>` : `<div id="see-${id}" hidden></div>`}
+        <textarea id="nt-${id}" data-nt="${id}" aria-label="Anotação do passo ${id}" placeholder="O que não bateu? O que você quer investigar depois?" ${note ? "" : "hidden"}>${note.replace(/</g, "&lt;")}</textarea>
+      </div>
+      <button type="button" class="note-toggle ${note ? "has" : ""}" data-note="${id}" aria-controls="nt-${id}" aria-expanded="${note ? "true" : "false"}">${note ? "Anotação: registrada" : "Anotar"}</button>
+    </div>
+  </li>`;
+}
+
+function render() {
+  document.querySelector('[data-scene="prep"]').innerHTML = SCENES.find(s => s.id === "prep").steps.map(stepHTML).join("");
+  document.querySelector('[data-scene="end"]').innerHTML = SCENES.find(s => s.id === "end").steps.map(stepHTML).join("");
+  document.getElementById("scenes").innerHTML = SCENES.filter(s => s.n).map(s => `
+    <section class="box" aria-labelledby="h-${s.id}">
+      <h2 id="h-${s.id}"><span class="scene-n">${s.n}</span>${s.title}<span class="scene-time" data-sc="${s.id}"></span></h2>
+      <div class="who"><span class="chip">${s.role}</span>${s.people}</div>
+      <ol class="steps" data-scene="${s.id}">${s.steps.map(stepHTML).join("")}</ol>
+    </section>`).join("");
+  refreshCounts();
+}
+
+function refreshCounts() {
+  const done = ALL.filter(id => state.done[id]).length;
+  document.getElementById("count").textContent = `${done} de ${ALL.length} passos`;
+  const pct = ALL.length ? 100 * done / ALL.length : 0;
+  document.getElementById("meterFill").style.width = pct + "%";
+  const meter = document.getElementById("meter");
+  meter.setAttribute("aria-valuemax", ALL.length);
+  meter.setAttribute("aria-valuenow", done);
+  for (const s of SCENES) {
+    const el = document.querySelector(`[data-sc="${s.id}"]`);
+    if (!el) continue;
+    const d = s.steps.filter(st => state.done[st[0]]).length;
+    const base = s.minutes ? ` · ${s.minutes} min` : "";
+    el.textContent = `${d}/${s.steps.length}${base}`;
+    el.classList.toggle("done", d === s.steps.length);
+  }
+}
+
+document.addEventListener("change", e => {
+  const cb = e.target.closest('input[type="checkbox"][id^="cb-"]');
+  if (!cb) return;
+  const id = cb.id.slice(3);
+  if (cb.checked) state.done[id] = true;
+  else delete state.done[id];
+  cb.closest("li").classList.toggle("checked", cb.checked);
+  refreshCounts();
+  save();
+});
+
+document.addEventListener("click", e => {
+  const button = e.target.closest("[data-note]");
+  if (button) {
+    const ta = document.getElementById("nt-" + button.dataset.note);
+    ta.hidden = !ta.hidden;
+    button.setAttribute("aria-expanded", String(!ta.hidden));
+    if (!ta.hidden) ta.focus();
+    return;
+  }
+  const copy = e.target.closest("[data-copy]");
+  if (copy) {
+    e.preventDefault();
+    e.stopPropagation();
+    const text = copy.dataset.copy;
+    const done = () => {
+      const old = copy.textContent;
+      copy.textContent = "copiado";
+      setTimeout(() => { copy.textContent = old; }, 1200);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(() => {});
+    } else {
+      done();
+    }
+  }
+});
+
+let noteTimer;
+document.addEventListener("input", e => {
+  const ta = e.target.closest("[data-nt]");
+  if (!ta) return;
+  const id = ta.dataset.nt;
+  const value = ta.value.trim();
+  if (value) state.notes[id] = ta.value;
+  else delete state.notes[id];
+  const button = document.querySelector(`[data-note="${id}"]`);
+  button.classList.toggle("has", !!value);
+  button.textContent = value ? "Anotação: registrada" : "Anotar";
+  clearTimeout(noteTimer);
+  noteTimer = setTimeout(save, 400);
+});
+
+const resetArea = document.getElementById("resetArea");
+resetArea.addEventListener("click", e => {
+  if (e.target.id === "resetBtn") {
+    resetArea.innerHTML = '<span class="sync">Desmarcar passos e apagar anotações?</span> <button class="danger" id="resetYes" type="button">Desmarcar</button> <button id="resetNo" type="button">Manter</button>';
+    document.getElementById("resetNo").focus();
+  } else if (e.target.id === "resetYes") {
+    state = {done: {}, notes: {}};
+    render();
+    save();
+    resetArea.innerHTML = '<button id="resetBtn" type="button">Desmarcar tudo</button>';
+  } else if (e.target.id === "resetNo") {
+    resetArea.innerHTML = '<button id="resetBtn" type="button">Desmarcar tudo</button>';
+  }
+});
+
+try {
+  const raw = localStorage.getItem(KEY);
+  if (raw) state = Object.assign({done: {}, notes: {}}, JSON.parse(raw));
+} catch (_) {}
+
+save = () => {
+  try {
+    localStorage.setItem(KEY, JSON.stringify(state));
+    document.getElementById("sync").textContent = "Salvo neste navegador";
+  } catch (_) {
+    document.getElementById("sync").textContent = "Não foi possível salvar neste navegador";
+  }
+};
+
+render();
+window.addEventListener("pagehide", save);
+</script>
+</body>
+</html>
