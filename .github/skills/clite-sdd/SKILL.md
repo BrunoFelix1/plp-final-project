@@ -18,12 +18,15 @@ Constituição: `.specify/memory/constitution.md`.
 ## Fluxo
 
 ```text
-specify → (clarify) → plan → (checklist) → tasks → (analyze) → implement → converge
+specify → plan → checklist → tasks → implement → converge
 ```
+
+A sequência é conduzida pelo usuário: pare ao fim de cada comando, peça revisão
+do artefato e informe apenas o próximo. Não encadeie comandos.
 
 ## Regra de saída (obrigatória)
 
-- Máximo 1 página por artefato.
+- Meta de 70 linhas por artefato; se passar de 100, seja mais conciso.
 - Tabelas/checklists em vez de prosa.
 - Não repetir `docs/`, `AGENTS.md` ou ticket; citar.
 - Todo artefato tem: objetivo em 1 frase, critérios verificáveis, fora de escopo

@@ -133,24 +133,30 @@ concluído.
 | 2 | planejar | `@.github/skills/speckit-plan/` | `/speckit.plan` |
 | 3 | checklist | `@.github/skills/speckit-checklist/` | `/speckit.checklist` |
 | 4 | tasks | `@.github/skills/speckit-tasks/` | `/speckit.tasks` |
-| — | implementar as tasks | execução do agente | execução do agente |
-| 5 | convergir | `@.github/skills/speckit-converge/` | `/speckit.converge` |
+| 5 | implementar | `@.github/skills/speckit-implement/` | `/speckit.implement` |
+| 6 | convergir | `@.github/skills/speckit-converge/` | `/speckit.converge` |
 
 `clarify` e `analyze` são opcionais: use apenas se houver dúvida real ou
 inconsistência. Eles não substituem a sequência acima.
 
+**A sequência não é automática.** Ao terminar um comando, **pare** e aguarde o
+usuário revisar o artefato e invocar o próximo. Nunca encadeie comandos
+Spec-Kit sozinho; o fluxo é conduzido pelo usuário.
+
 - **Após cada comando:** não imprima a saída completa no console. Mostre apenas
-  o artefato criado, o caminho, 3 bullets de resumo e o próximo comando.
+  o artefato criado, o caminho, 3 bullets de resumo e o próximo comando para o
+  usuário executar.
 - **Peça revisão:** encerre com “Revise `specs/.../<arquivo>.md` antes de
   seguir.”
 - **Próximo comando:** informe **um único** comando, começando com `@` no
-  Copilot, relativo ao último passo concluído.
-- **Depois de `tasks`:** implemente as tasks; o próximo comando será
-  `converge`.
+  Copilot, relativo ao último passo concluído; não o execute sozinho.
+- **Depois de `tasks`:** o próximo comando é `implement`; depois de
+  `implement`, `converge`.
 - **Se `converge` não retornar problemas:** informe o usuário para rodar os
   testes gerais (`make check`; no Windows, os quatro comandos `uv run ...`) e
   conferir a consistência da branch. Não sugira outro comando speckit.
-- **Se `converge` retornar problemas:** corrija e rode `converge` novamente.
+- **Se `converge` retornar problemas:** corrija e peça para rodar `converge`
+  novamente.
 
 Se a spec revelar ambiguidade, escopo maior que o ticket ou conflito com
 `docs/01`, pare e proponha a correção do ticket/plano antes de codar.
@@ -216,8 +222,10 @@ inclusive em pedidos pequenos e escritos em inglês. Ele não substitui o ticket
 serve para entender o contexto antes de planejar ou codar.
 
 A sequência obrigatória é `specify` → `plan` → `checklist` → `tasks` →
-implementação → `converge` (§5.2). Depois de cada comando, peça revisão do
-arquivo gerado e informe **apenas o próximo comando**, não a sequência inteira.
+`implement` → `converge` (§5.2). Cada comando é invocado pelo usuário depois de
+revisar o artefato anterior; o agente não encadeia comandos automaticamente.
+Depois de cada comando, peça revisão do arquivo gerado e informe **apenas o
+próximo comando**, não a sequência inteira.
 
 **Regra de saída:** todo artefato gerado por comando SDD (`spec.md`, `plan.md`,
 `tasks.md`, checklists, relatórios) deve ser **sucinto, resumido e objetivo**:
