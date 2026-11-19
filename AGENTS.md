@@ -25,6 +25,11 @@ Leia, nesta ordem, antes de qualquer mudança:
 Se o código divergir dos documentos, **pare** e abra um ticket `docs:` ou
 `fix:`; não “conserte” o documento para justificar o código sem discussão.
 
+> **Antes de implementar:** todo pedido de implementação/codificação feito a uma
+> LLM, em português ou inglês, segue o protocolo obrigatório da §5: garantir a
+> branch do ticket e começar pelo Spec-Kit `specify`. Não escreva código antes
+> disso.
+
 ## 3. Comandos
 
 ```bash
@@ -46,6 +51,9 @@ comando executado não é mesclado.
 
 ## 4. Regras de implementação
 
+- Siga os princípios técnicos **T0–T2** da
+  [constituição](.specify/memory/constitution.md): edição cirúrgica, SOLID e
+  qualidade, e TDD (Red–Green–Refactor).
 - Python 3.12+, sem dependências de runtime. O parser é escrito à mão.
 - Tipagem estática em `src/` (`mypy --strict`). `Any` exige justificativa no PR.
 - Nós da AST são `dataclass` imutáveis; comportamento fica nos visitantes
@@ -59,19 +67,117 @@ comando executado não é mesclado.
 - Toda mudança de gramática atualiza `docs/01` (gramática **implementada**) no
   mesmo PR. `docs/02` é o desenho-alvo da v2 e só muda se o desenho mudar.
 
-## 5. Fluxo de trabalho por ticket
+## 5. Protocolo obrigatório para implementação por LLM
 
-1. Leia o ticket e o trecho do livro indicado. Se o requisito for ambíguo,
-   pergunte antes de codar.
+Vale para qualquer pedido de implementação, correção ou codificação feito a um
+agente, **em português ou inglês**. Não escreva código antes de concluir 5.1 e
+5.2.
+
+### 5.1 Branch correta (obrigatório)
+
+1. Identifique o ticket pelo formato `tipo: NNN - slug` (ex.:
+   `feat: 027 - lexer-e-parser-de-classes`). Sem ticket, pare e crie/peça um
+   antes de implementar.
+2. Verifique a branch atual:
+   ```bash
+   git branch --show-current
+   ```
+3. Decida antes de qualquer edição:
+   - **`main`**: crie a branch do ticket a partir da `main` atualizada e anuncie
+     isso na primeira resposta (não peça confirmação; a regra já autoriza).
+     ```bash
+     git fetch origin
+     git switch main
+     git pull --ff-only
+     git switch -c feat/027-lexer-e-parser-de-classes
+     ```
+   - **branch do próprio ticket** (`tipo/NNN-...`): prossiga.
+   - **outra branch**: avise explicitamente antes de começar — “Você está em
+     `X`; vou criar a branch `Y` a partir da `main` para este ticket.” — e só
+     então crie a branch correta.
+4. **Nunca** commite direto na `main`.
+5. Se houver alterações não commitadas, **não** troque de branch, não faça stash
+   e não descarte nada sem orientação explícita. Pare e pergunte.
+
+O nome da branch **começa pelo tipo + número do ticket**:
+`feat/027-...`, `fix/012-...`, `docs/002-...`, `chore/001-...`.
+
+### 5.2 SDD `specify` antes de implementar (obrigatório)
+
+Antes de planejar ou codar, use o Spec-Kit para entender o contexto do ticket,
+considerando o projeto e a documentação existentes:
+
+| Ferramenta | Como invocar |
+| --- | --- |
+| Copilot | skill `@.github/skills/speckit-specify/` (equivale a `/speckit-specify`) |
+| OpenCode | `/speckit.specify` |
+
+Passe como contexto o ticket (número, título, corpo), os documentos `docs/01` a
+`docs/06` relevantes e o estado atual da fase. O `specify` existe para
+**entender antes de implementar**, não para gerar burocracia: mantenha a saída
+curta, conforme [`docs/agents/sdd-conciso.md`](docs/agents/sdd-conciso.md).
+
+> **Atenção:** o script do Spec-Kit pode tentar criar uma branch própria
+> (`NNN-slug`). Mantenha a branch criada em 5.1 usando
+> `GIT_BRANCH_NAME=<tipo/NNN-slug>` (ou a opção equivalente da ferramenta).
+> O diretório da spec pode ser `specs/NNN-slug/`; ele não deve trocar a branch
+> de trabalho.
+
+Depois do `specify`, siga a sequência fixa abaixo. **Não sugira a sequência
+inteira de uma vez**: informe apenas o próximo comando, considerando o último
+concluído.
+
+| # | Etapa | Copilot | OpenCode |
+| --- | --- | --- | --- |
+| 1 | especificar | `@.github/skills/speckit-specify/` | `/speckit.specify` |
+| 2 | planejar | `@.github/skills/speckit-plan/` | `/speckit.plan` |
+| 3 | checklist | `@.github/skills/speckit-checklist/` | `/speckit.checklist` |
+| 4 | tasks | `@.github/skills/speckit-tasks/` | `/speckit.tasks` |
+| — | implementar as tasks | execução do agente | execução do agente |
+| 5 | convergir | `@.github/skills/speckit-converge/` | `/speckit.converge` |
+
+`clarify` e `analyze` são opcionais: use apenas se houver dúvida real ou
+inconsistência. Eles não substituem a sequência acima.
+
+- **Após cada comando:** não imprima a saída completa no console. Mostre apenas
+  o artefato criado, o caminho, 3 bullets de resumo e o próximo comando.
+- **Peça revisão:** encerre com “Revise `specs/.../<arquivo>.md` antes de
+  seguir.”
+- **Próximo comando:** informe **um único** comando, começando com `@` no
+  Copilot, relativo ao último passo concluído.
+- **Depois de `tasks`:** implemente as tasks; o próximo comando será
+  `converge`.
+- **Se `converge` não retornar problemas:** informe o usuário para rodar os
+  testes gerais (`make check`; no Windows, os quatro comandos `uv run ...`) e
+  conferir a consistência da branch. Não sugira outro comando speckit.
+- **Se `converge` retornar problemas:** corrija e rode `converge` novamente.
+
+Se a spec revelar ambiguidade, escopo maior que o ticket ou conflito com
+`docs/01`, pare e proponha a correção do ticket/plano antes de codar.
+
+**Conteúdo dos artefatos SDD**
+
+- Este é um **projeto acadêmico**: explique o conceito que está sendo
+  implementado, por que ele importa e como verificar. Não entregue só
+  checklist.
+- Meta de tamanho: **até 70 linhas por arquivo**. Não é bloqueio; a ideia é ser
+  econômico para que conceito + explicação caibam em **menos de 100 linhas**.
+  Se for passar de 100 linhas, procure ser ainda mais conciso após a centésima linha.
+
+### 5.3 Fluxo por ticket
+
+1. Leia o ticket, o **Conceito** e a seção **Leitura** (livro com capítulo e
+   seção). Se o requisito for ambíguo, pergunte antes de codar.
 2. Confira o campo **Paralelismo** do ticket: se outra pessoa/agente estiver nos
    mesmos arquivos, negocie a ordem.
-3. Crie a branch `tipo/NNN-slug` a partir da `main`.
+3. Confirme a branch (§5.1) e o `specify` (§5.2).
 4. Escreva o teste primeiro (quando fizer sentido) e veja falhar.
 5. Implemente o mínimo para passar. Sem “melhorias de passagem”.
-6. Rode `make check` e o comando específico do ticket.
-7. Abra o PR no formato de `docs/agents/pull-request.md`, referenciando o ticket
+6. Atualize `docs/01` no mesmo PR se a gramática mudou.
+7. Rode `make check` e o comando específico do ticket.
+8. Abra o PR no formato de `docs/agents/pull-request.md`, referenciando o ticket
    com `Closes #N`.
-8. Ao entrar em revisão, mova o card para **In Review**; após o merge, ele segue
+9. Ao entrar em revisão, mova o card para **In Review**; após o merge, ele segue
    o fluxo de QA até **Released**.
 
 ## 6. Limites de escopo
@@ -102,7 +208,16 @@ comando executado não é mesclado.
 ## 8. Spec-Driven Development (SDD)
 
 O projeto usa Spec-Kit (`specify`). Comandos no Copilot usam hífen
-(`/speckit-specify`); no OpenCode usam ponto (`/speckit.specify`).
+(`/speckit-specify`) e a skill fica em `.github/skills/speckit-specify/`; no
+OpenCode usam ponto (`/speckit.specify`).
+
+**Para implementar, o `specify` é obrigatório e é a primeira etapa** (§5.2),
+inclusive em pedidos pequenos e escritos em inglês. Ele não substitui o ticket:
+serve para entender o contexto antes de planejar ou codar.
+
+A sequência obrigatória é `specify` → `plan` → `checklist` → `tasks` →
+implementação → `converge` (§5.2). Depois de cada comando, peça revisão do
+arquivo gerado e informe **apenas o próximo comando**, não a sequência inteira.
 
 **Regra de saída:** todo artefato gerado por comando SDD (`spec.md`, `plan.md`,
 `tasks.md`, checklists, relatórios) deve ser **sucinto, resumido e objetivo**:

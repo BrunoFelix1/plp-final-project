@@ -5,7 +5,8 @@
 **Input**: "$ARGUMENTS"
 
 <!--
-  REGRA DO PROJETO: no máximo 1 página. Tabelas e checklists em vez de prosa.
+  REGRA DO PROJETO: meta de 70 linhas; se passar de 100, seja mais conciso.
+  Tabelas e checklists em vez de prosa. Explique o conceito que será implementado.
   Não repita docs/01, docs/02, AGENTS.md nem tickets. Cite.
   Leia .specify/memory/constitution.md antes de preencher.
 -->

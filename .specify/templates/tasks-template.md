@@ -4,7 +4,7 @@
 **Pré-requisito**: `make check` verde antes de começar.
 
 <!--
-  REGRA DO PROJETO: no máximo 1 página. Uma linha por task.
+  REGRA DO PROJETO: meta de 70 linhas; se passar de 100, seja mais conciso. Uma linha por task.
   Formato: [ID] [P?] [Story?] Descrição — arquivo — teste.
   [P] = pode rodar em paralelo (arquivos disjuntos).
 -->

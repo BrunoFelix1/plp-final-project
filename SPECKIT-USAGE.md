@@ -49,13 +49,19 @@ funcionam normalmente.
 
 ```text
 1. /speckit-specify     → descreva o comportamento desejado (sem código)
-2. /speckit-clarify     → opcional, se houver ambiguidade
-3. /speckit-plan        → plano técnico curto
+2. /speckit-plan        → plano técnico curto
+3. /speckit-checklist   → checklist de qualidade
 4. /speckit-tasks       → checklist de tasks
-5. /speckit-analyze     → opcional, checa consistência
-6. /speckit-implement   → implementa, com teste
-7. /speckit-converge    → confirma o que falta
+5. implementação        → o agente executa as tasks, com teste
+6. /speckit-converge    → confirma o que falta
 ```
+
+`/speckit-clarify` e `/speckit-analyze` são **opcionais** e não entram na
+sequência padrão: use apenas se houver ambiguidade ou inconsistência a resolver.
+Não sugira a sequência inteira de uma vez; informe somente o próximo comando,
+conforme o último concluído. Depois de cada comando, peça revisão do arquivo
+gerado. Quando `converge` não retornar problemas, rode os testes gerais
+(`make check`; no Windows, os comandos `uv run` equivalentes).
 
 O fluxo SDD **não substitui** o board. Cada task gerada deve apontar para um
 ticket (`feat: NNN`) ou propor um novo no formato de

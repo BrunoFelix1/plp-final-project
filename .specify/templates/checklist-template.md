@@ -3,7 +3,7 @@
 **Spec**: [link] · **Plan**: [link] · **Tasks**: [link]
 
 <!--
-  REGRA DO PROJETO: 1 página; itens verificáveis, sem prosa.
+  REGRA DO PROJETO: meta de 70 linhas; se passar de 100, seja mais conciso.
   Marque [x] apenas com evidência (comando, saída ou link).
 -->
 

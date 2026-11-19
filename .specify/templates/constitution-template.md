@@ -35,14 +35,31 @@ Python 3.12+, sem dependências de runtime, `mypy --strict`, `ruff` e `pytest`.
 v1 completa antes da v2. OO limitado a classes, herança, polimorfismo e
 sobreescrita.
 
+### T0. Edição cirúrgica (P0)
+
+Não reformate linhas existentes. Altere apenas o necessário; linhas novas ou
+alteradas respeitam 80–100 colunas.
+
+### T1. SOLID e qualidade
+
+SRP, OCP, LSP, ISP e DIP. Python 3.12+, `dataclass(frozen=True)`,
+`Protocol`/ABC, sem threads, DRY e KISS, métodos ≤20 linhas, CC<10 e
+aninhamento ≤3.
+
+### T2. TDD
+
+RED → GREEN → REFACTOR. Cobertura de 80% no geral e 100% nos caminhos críticos.
+Testes de unidade, conformidade `.clite` e erros com `pytest`, `pytest-cov` e
+`Hypothesis`.
+
 ## Saída de comandos SDD
 
-Artefatos com no máximo 1 página, em tabelas/checklists, sem repetir o
-repositório.
+Artefatos com meta de 70 linhas; se passar de 100, seja mais conciso, em
+tabelas/checklists, sem repetir o repositório.
 
 ## Governance
 
 Emendas via PR, com justificativa e atualização da versão. Decisões técnicas
 viram `D-NN` em `docs/05-decisoes.md`.
 
-**Version**: 1.0.0 · **Ratified**: 17/11/2026 · **Last Amended**: 17/11/2026
+**Version**: 1.1.0 · **Ratified**: 17/11/2026 · **Last Amended**: 18/11/2026

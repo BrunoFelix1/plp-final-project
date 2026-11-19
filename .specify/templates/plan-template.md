@@ -3,7 +3,8 @@
 **Branch**: `[###-feature-name]` · **Date**: [DATE] · **Spec**: [link]
 
 <!--
-  REGRA DO PROJETO: no máximo 1 página. Sem repetir a spec. Tabelas primeiro.
+  REGRA DO PROJETO: meta de 70 linhas; se passar de 100, seja mais conciso. Sem repetir a spec.
+  Tabelas primeiro e uma breve explicação do conceito.
   Toda decisão nova vira D-NN em docs/05-decisoes.md.
 -->
 
