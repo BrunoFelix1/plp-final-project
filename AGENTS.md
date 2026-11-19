@@ -186,6 +186,19 @@ Se a spec revelar ambiguidade, escopo maior que o ticket ou conflito com
 9. Ao entrar em revisão, mova o card para **In Review**; após o merge, ele segue
    o fluxo de QA até **Released**.
 
+### 5.4 Pull request pedido pelo usuário
+
+Quando o pedido for “abrir o PR”:
+
+1. **Rode os testes locais antes de abrir**: `make check` (no Windows, os quatro
+   comandos `uv run ...`). Se falhar, não abra o PR; corrija ou relate o erro.
+2. Abra o PR com `Closes #N`, título semântico e corpo baseado em
+   `docs/agents/pull-request.md` (use `--body-file` para evitar escaping).
+3. **Preencha o que for possível**: o que mudou, comando e resultado real,
+   checklist, riscos e decisões. No que depender de julgamento humano — como o
+   aprendizado pessoal — escreva “a preencher”; não invente.
+4. Mova o card para **In Review** e **não faça merge**.
+
 ## 6. Limites de escopo
 
 - **Não** implemente OO antes de a suíte de conformidade da v1 estar verde.

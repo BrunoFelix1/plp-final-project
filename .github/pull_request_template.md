@@ -1,4 +1,6 @@
 <!-- Formato obrigatório: docs/agents/pull-request.md -->
+<!-- LLM: rode `make check` antes de abrir; preencha o que for possível;
+     use "a preencher" no que depender de julgamento humano. -->
 
 ## Ticket
 
@@ -12,7 +14,7 @@ Closes #
 ## Como verificar
 
 ```bash
-uv run pytest tests/... -q
+uv run pytest
 make check
 ```
 

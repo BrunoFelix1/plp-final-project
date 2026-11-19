@@ -31,7 +31,7 @@ assignees: []
 ## Verificação técnica
 
 ```bash
-uv run pytest tests/... -q
+uv run pytest
 make check
 ```
 
