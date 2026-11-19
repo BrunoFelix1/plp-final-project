@@ -57,14 +57,17 @@ que o conceito e a explicação caibam em **menos de 100 linhas**. Se passar de
 2. `plan`
 3. `checklist`
 4. `tasks`
-5. implementação das tasks
+5. `implement`
 6. `converge`
 
+- **A sequência não é automática:** ao fim de cada comando, pare e aguarde o
+  usuário revisar o artefato e invocar o próximo. Não encadeie comandos.
 - Não despeje a saída do comando no console. Seja conciso.
 - Ao final de cada comando, mostre apenas: artefato criado, caminho, 3 bullets de
   resumo, pedido de revisão do arquivo e **um único** próximo comando.
 - Não sugira a sequência inteira; o próximo comando depende do último concluído.
-- Depois de `tasks`, implemente as tasks; depois, rode `converge`.
+- Depois de `tasks`, o próximo comando é `implement`; depois de `implement`,
+  `converge`.
 - Se `converge` não retornar problemas, oriente rodar os testes gerais
   (`make check`; no Windows, os quatro comandos `uv run ...`) e conferir a
   consistência da branch. Não sugira outro comando Spec-Kit.

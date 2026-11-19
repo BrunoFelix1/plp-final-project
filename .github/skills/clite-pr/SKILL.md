@@ -20,13 +20,14 @@ Sem o resultado, não há merge — nem em PR de documentação.
 ## Passos
 
 1. Atualize a `main` e crie a branch `tipo/NNN-slug`.
-2. Rode o teste específico e `make check`.
-3. Preencha o template:
+2. **Antes de abrir, rode os testes locais**: `make check` (no Windows, os
+   comandos `uv run` equivalentes). Se falhar, não abra o PR.
+3. Preencha o template com o que for possível:
    - `Closes #N`
    - o que mudou (2–4 bullets de comportamento)
-   - como verificar + resultado (`__ passed`)
+   - como verificar + resultado real (`__ passed`)
    - checklist
-   - aprendizado em 3 linhas
+   - rascunho do aprendizado em 3 linhas, marcado para revisão humana
    - riscos/decisões
 4. Abra:
    ```bash
@@ -36,6 +37,8 @@ Sem o resultado, não há merge — nem em PR de documentação.
    ```
 5. Mova o card para **In Review**.
 6. Após merge: **Ready for QA**, com o comando de QA no ticket.
+
+O que depender de julgamento humano deve ficar como “a preencher”; não invente.
 
 ## Checklist de revisão
 

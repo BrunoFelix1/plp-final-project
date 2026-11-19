@@ -16,6 +16,19 @@ make check
 rápido durante o desenvolvimento, use o comando específico do ticket e rode
 `make check` antes de pedir revisão.
 
+## Quando o pedido é de uma LLM
+
+1. **Rode os testes locais antes de abrir o PR**: `make check` (no Windows, os
+   quatro comandos `uv run ...`).
+2. Só abra o PR se os testes passarem. Se falharem, corrija ou relate; **não
+   abra PR vermelho**.
+3. Crie o PR com `Closes #N`, título semântico e o template abaixo.
+4. Preencha o que for possível: mudanças, comando de verificação com o resultado
+   real, checklist e riscos.
+5. No que depender de julgamento humano (ex.: “aprendizado em 3 linhas”), escreva
+   “a preencher”; não invente.
+6. Mova o card para **In Review**. **Não faça merge.**
+
 ## Template
 
 ````markdown

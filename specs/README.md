@@ -29,4 +29,7 @@ specs/
 /speckit.specify → /speckit.plan → /speckit.tasks → /speckit.implement → /speckit.converge
 ```
 
+A sequência é conduzida pelo usuário: pare ao fim de cada comando, peça revisão
+do artefato e informe apenas o próximo. Não encadeie comandos.
+
 Guia completo: `SPECKIT-USAGE.md`.

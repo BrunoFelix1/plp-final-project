@@ -30,14 +30,5 @@ jobs:
       - name: Sincronizar dependências
         run: uv sync --frozen
 
-      - name: Lint (ruff)
-        run: uv run ruff check .
-
-      - name: Formatação (ruff format)
-        run: uv run ruff format --check .
-
-      - name: Tipos (mypy)
-        run: uv run mypy src
-
-      - name: Testes (pytest)
-        run: uv run pytest --cov --cov-report=term-missing
+      - name: Gate de qualidade
+        run: make check

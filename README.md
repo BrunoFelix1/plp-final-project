@@ -210,9 +210,14 @@ Released; os milestones M1–M5 têm as datas da tabela acima.
 ## Spec-Driven Development
 
 ```text
-Copilot:  /speckit-specify  /speckit-plan  /speckit-tasks  /speckit-implement
-OpenCode: /speckit.specify  /speckit.plan  /speckit.tasks  /speckit.implement
+Copilot:  /speckit-specify  /speckit-plan  /speckit-checklist  /speckit-tasks
+          /speckit-implement  /speckit-converge
+OpenCode: /speckit.specify  /speckit.plan  /speckit.checklist  /speckit.tasks
+          /speckit.implement  /speckit.converge
 ```
+
+A sequência é conduzida pelo usuário: ao fim de cada comando, revise o artefato
+e invoque o próximo. O agente não encadeia comandos automaticamente.
 
 Todos os artefatos do SDD são gerados em formato **sucinto e objetivo** (ver
 [`docs/agents/sdd-conciso.md`](docs/agents/sdd-conciso.md)). O guia completo
