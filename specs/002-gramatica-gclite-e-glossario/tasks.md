@@ -66,4 +66,4 @@ revisão documental; `make check` é o gate final, pois não há teste de runtim
 ## Phase 6: Convergence
 
 - [ ] T011 Solicitar revisão por pares da checklist `specs/002-gramatica-gclite-e-glossario/checklists/documentation.md` e registrar a aprovação ou os ajustes necessários per SC-003 (missing)
-- [ ] T012 Abrir ou atualizar o PR com `make check` e seu resultado, conforme a documentação operacional per T010 / Constitution VII (partial)
+- [x] T012 Abrir ou atualizar o PR com `make check` e seu resultado, conforme a documentação operacional per T010 / Constitution VII (partial)
