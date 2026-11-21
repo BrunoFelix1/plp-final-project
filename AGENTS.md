@@ -199,6 +199,21 @@ Quando o pedido for “abrir o PR”:
    aprendizado pessoal — escreva “a preencher”; não invente.
 4. Mova o card para **In Review** e **não faça merge**.
 
+### 5.5 Checklists gerados pelo SDD
+
+Quando o fluxo criar `checklists/documentation.md`,
+`checklists/requirements.md` ou outro checklist, verifique **item por item**
+contra o repositório e os artefatos gerados:
+
+1. Se o item estiver atendido, marque `- [X]`.
+2. Se estiver atendido após um ajuste simples, faça o ajuste e marque `- [X]`.
+3. Se o item depender de decisão ou validação humana, mantenha `- [ ]`,
+   explique o motivo e avise o usuário para revisar.
+4. Não marque item sem verificação real; não invente evidência.
+
+Ao final, informe quantos itens foram verificados, quais continuam abertos e por
+quê. Peça revisão apenas dos itens que realmente precisam do usuário.
+
 ## 6. Limites de escopo
 
 - **Não** implemente OO antes de a suíte de conformidade da v1 estar verde.
