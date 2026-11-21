@@ -35,6 +35,20 @@ semântico → execução.
 | Sistema de tipos | quais programas são válidos antes de executar | `src/clite/semantic/` |
 | Semântica | o que o programa faz quando executado | `src/clite/interpreter/` |
 
+### 2.1 Glossário mínimo
+
+| Termo | Definição para estudo |
+| --- | --- |
+| Token | unidade classificada pelo lexer, como `INT`, `IDENT` ou `PLUS`; carrega o lexema e sua posição. |
+| Lexema | sequência de caracteres do programa que originou um token, como `while`, `contador` ou `<=`. |
+| AST (sintaxe abstrata) | árvore canônica produzida a partir da análise; mantém o que importa para tipos e execução, sem pontuação desnecessária. |
+| Parser | fase que recebe tokens, aplica a gramática concreta e constrói a árvore sintática/AST. |
+| Tabela de símbolos | estrutura que associa cada nome declarado ao seu tipo e às informações necessárias para resolvê-lo. |
+| Type checking (checagem de tipos) | análise semântica que verifica as regras de tipos antes da execução e rejeita programas inválidos. |
+
+As diferenças entre as camadas aparecem na tabela acima e na arquitetura do
+front-end em [`03-arquitetura-frontend.md`](03-arquitetura-frontend.md).
+
 ## 3. Gramática concreta (GClite)
 
 Notação: `{ x }` = zero ou mais; `[ x ]` = opcional. **Cuidado:** na gramática
@@ -73,9 +87,9 @@ Primário        → Identificador [ [ Expressão ] ] | Literal | ( Expressão )
 Identificador   → Letra { Letra | Dígito }
 Letra           → a | … | z | A | … | Z
 Dígito          → 0 | … | 9
-Literal         → Inteiro | Boleano | PontoFlutuante | Caractere
+Literal         → Inteiro | Booleano | PontoFlutuante | Caractere
 Inteiro         → Dígito { Dígito }
-Boleano         → true | false
+Booleano        → true | false
 PontoFlutuante  → Inteiro . Inteiro
 Caractere       → ' CaractereASCII '
 ```
@@ -120,18 +134,20 @@ com `//` e vão até o fim da linha (convenção de C++).
 
 ### 4.2 Tokens
 
-| Grupo | Tokens |
+| Grupo | Lexemas (tokens) |
 | --- | --- |
-| Palavras reservadas | `bool` `char` `else` `false` `float` `if` `int` `main` `true` `while` |
+| Palavras reservadas | `bool` `char` `class` `else` `extends` `false` `float` `if` `int` `main` `new` `print` `return` `this` `true` `void` `while` |
 | Identificadores | letra seguida de letras/dígitos: `x`, `contador`, `a1` |
 | Literais | inteiro (`42`), float (`3.14`), booleano (`true`), caractere (`'a'`) |
 | Operadores |  `&&` `=` `==` `!=` `<` `<=` `>` `>=` `+` `-` `*` `/` `%` `!` `[` `]` `\|\|` |
 | Pontuação | `;` `,` `{` `}` `(` `)` |
 
-`main` é **reservada em CLite** (difere de C/C++, onde é um identificador
-especial). `void`, `class`, `extends`, `new`, `this`, `return` e `print` entram
-na lista de reservadas já na v1, mesmo antes da extensão OO, para que nenhum
-programa válido da v1 quebre na v2. Ver `docs/05-decisoes.md` (D-03).
+Na tabela, **token** é a categoria reconhecida pelo lexer e **lexema** é o texto
+concreto que pertence a essa categoria. `main` é **reservada em CLite** (difere
+de C/C++, onde é um identificador especial). `void`, `class`, `extends`, `new`,
+`this`, `return` e `print` entram na lista de reservadas já na v1, mesmo antes da
+extensão OO, para que nenhum programa válido da v1 quebre na v2. Ver
+`docs/05-decisoes.md` (D-03).
 
 ### 4.3 Regras de reconhecimento
 
@@ -177,14 +193,19 @@ de projeto herdada de Ada que evita o bug silencioso de C.
 ## 6. Sintaxe abstrata (núcleo)
 
 ```text
-Programa      = Declarações decpart; Comandos body
+Programa      = Programa(declarações, comandos)
 Declaração    = VarDecl(nome, tipo) | ArrayDecl(nome, tipo, tamanho)
 Comando       = Skip | Bloco(Comandos) | Atribuição(alvo, fonte)
               | Condicional(teste, então, senão?) | Laço(teste, corpo)
 Expressão     = VarRef(nome) | ArrayRef(nome, índice) | Valor
               | Binário(op, esq, dir) | Unário(op, termo)
+              | Conversão(tipo, termo)
 Valor         = IntValor | FloatValor | BoolValor | CharValor
 ```
+
+Nesta notação, `declarações` e `comandos` são campos do nó `Programa`, não
+produções da gramática concreta. `Conversão` representa `Tipo ( Expressão )` e
+é uma expressão explícita na AST.
 
 Arrays são de tamanho fixo e o tamanho é um **literal inteiro** na declaração,
 não uma expressão (`int v[n];` é erro). Blocos **não** introduzem escopo: todas
