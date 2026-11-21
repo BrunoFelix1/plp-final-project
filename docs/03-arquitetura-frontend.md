@@ -120,10 +120,12 @@ não guarda tokens, só posição (`line`, `column`) para relatórios.
 
 O checker percorre a AST com um `TypeContext`:
 
-- **globais**: classes, campos, assinaturas de métodos;
-- **locais**: variáveis de `main` ou de um método;
-- **retorno**: tipo de retorno do método corrente;
-- **classe corrente**: para `this` e para resolver campos.
+- **globais** (v2): classes, campos, assinaturas de métodos;
+- **locais**: variáveis de `main` ou (v2) de um método;
+- **retorno** (v2): tipo de retorno do método corrente;
+- **classe corrente** (v2): para `this` e para resolver campos.
+
+Na v1 só existem as variáveis de `main`, num escopo único (D-06).
 
 Saída: a mesma AST anotada com `static_type` em cada expressão, ou uma lista de
 erros. Nenhuma execução acontece se houver erro de tipo.
@@ -132,13 +134,14 @@ erros. Nenhuma execução acontece se houver erro de tipo.
 
 O estado de execução tem:
 
-- `frames`: pilha de ambientes (main, chamada de método);
-- `heap`: objetos alocados por `new`;
+- `frames`: pilha de ambientes (main, chamada de método); na v1, um único
+  ambiente com as variáveis de `main` (D-06);
+- `heap` (v2): objetos alocados por `new`;
 - `output`: linhas produzidas por `print`.
 
-O avaliador devolve um valor para expressões e um estado para comandos. `return`
-é implementado com uma exceção interna `ReturnSignal`, capturada pela chamada
-de método. Erros de execução (divisão por zero, índice inválido, `undef`) viram
+O avaliador devolve um valor para expressões e um estado para comandos. (v2)
+`return` é implementado com uma exceção interna `ReturnSignal`, capturada pela
+chamada de método. Erros de execução (divisão por zero, índice inválido, `undef`) viram
 `RuntimeCliteError` com linha/coluna.
 
 ## 5. Estratégia de erros
