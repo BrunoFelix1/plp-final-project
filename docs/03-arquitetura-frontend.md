@@ -23,29 +23,34 @@ geração de código por avaliação direta da AST.** Continuamos sendo um front
 completo — e ganhamos um interpretador executável, que é o objetivo didático.
 
 ```text
+cli.py (entrada: `clite tokens|parse|check|run`)
+      │
 programa.clite
       │
       ▼
 ┌─────────────┐   Token(tag, lexema, linha, coluna)
 │   Lexer     │ ───────────────────────────────────────┐
-└─────────────┘                                        │
+└─────────────┘ lexer/                                 │
       ▲                                                ▼
       │                                        ┌─────────────┐
-   caracteres                                  │   Parser    │
+   caracteres                                  │   Parser    │  parser/
                                                └─────────────┘
-                                                      │ AST
+                                                      │ AST (ast/)
                                                       ▼
-                                               ┌─────────────┐
-                                               │ TypeChecker │  ← tabela de símbolos
-                                               └─────────────┘
+                                          ┌────────────────────────┐
+                                          │ Semantic (TypeChecker) │  semantic/
+                                          └────────────────────────┘  ← tabela de símbolos
+                                                      │                 (symbols.py, types.py)
                                                       │ AST validada
                                                       ▼
                                                ┌─────────────┐
-                                               │ Interpret.  │  ← estado (variáveis/objetos)
-                                               └─────────────┘
+                                               │ Interpret.  │  interpreter/
+                                               └─────────────┘  ← estado (values.py)
                                                       │
                                                       ▼
                                                 print / estado final
+
+errors.py: usado por todas as fases (E1xxx léxico … E4xxx execução, ver §5)
 ```
 
 ## 2. Mapa Apêndice A → Python
