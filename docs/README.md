@@ -5,7 +5,7 @@ vai implementar ou revisar.
 
 | Documento | Para quê |
 | --- | --- |
-| [01-linguagem-clite.md](01-linguagem-clite.md) | gramática, tokens, precedência, tipos e semântica da v1 — **fonte da verdade** |
+| [01-linguagem-clite.md](01-linguagem-clite.md) | gramática, tokens, precedência, glossário, tipos e semântica da v1 — **fonte da verdade** |
 | [02-extensao-oo.md](02-extensao-oo.md) | gramática, tipos e modelo de execução da v2 (classes, herança, polimorfismo, override) |
 | [03-arquitetura-frontend.md](03-arquitetura-frontend.md) | fases, pacotes, mapa do Apêndice A (Java) para Python, erros, CLI e testes |
 | [04-plano-de-aprendizado.md](04-plano-de-aprendizado.md) | cronograma, milestones, trilhas paralelas e ritual de estudo |

@@ -3,6 +3,9 @@
 > Lista viva. Cada linha vira um teste (`tests/unit` ou `tests/errors`) e, quando
 > necessário, um ticket. Se você encontrou um caso novo, adicione antes de
 > corrigir.
+>
+> As seções 1–4 descrevem o núcleo v1. Casos de classes e objetos ficam
+> identificados separadamente como futuros e pertencem ao desenho de `docs/02`.
 
 ## 1. Léxico
 
@@ -13,8 +16,8 @@
 | Operador quebrado | `a < = b` | `<` e `=`; erro sintático em `=` |
 | Float malformado | `5.` / `.5` | erro léxico `E1001` |
 | Float com dois pontos | `1.2.3` | `1.2` seguido de erro em `.` |
-| Char vazio | `''` | erro léxico |
-| Char longo | `'ab'` | erro léxico |
+| Char vazio | `''` | erro léxico `E1001` |
+| Char longo | `'ab'` | erro léxico `E1001` |
 | Char imprimível | `' '` | válido (espaço é imprimível) |
 | Comentário | `// x = 1;` | ignorado até a nova linha |
 | Comentário no fim do arquivo | `int main() { } // fim` | válido |
@@ -60,7 +63,7 @@
 | `!` em int | `!1` | `E3006` |
 | `-` em bool | `-true` | `E3006` |
 | Índice não inteiro | `v[1.0]` | `E3008` |
-| `undef` | `int x; print(x);` | `E4001` na execução |
+| `undef` | `int x; x = x + 1;` | `E4001` na execução |
 
 ## 4. Execução
 
@@ -75,6 +78,14 @@
 | Divisão negativa | `-7 / 2` | `-3` (trunca em direção a zero) |
 | Curto-circuito | `false && (1 / 0 == 0)` | `false`, sem erro |
 | Curto-circuito `\|\|` | `true \|\| (1 / 0 == 0)` | `true`, sem erro |
+
+### 4.1 Casos OO (futuros)
+
+Estes casos não fazem parte da gramática v1; documentam comportamentos previstos
+para a extensão descrita em `docs/02`.
+
+| Caso | Entrada | Comportamento esperado |
+| --- | --- | --- |
 | Aliasing de objeto | `a = c; a.pernas = 3;` | muda também `c.pernas` |
 | Campo `undef` | `print(c.pernas);` após `new` | `E4102` |
 | Método sem `return` | caminho que cai no fim | `E4103` |
