@@ -2,7 +2,7 @@
 
 > Base: *Compiladores: Princípios, Técnicas e Ferramentas*, cap. 1 (o que é o
 > front-end) e Apêndice A (um front-end completo). O Apêndice A é escrito em
-> Java, com os pacotes `main`, `lexer`, `symbol`, `parser` e `inter`; aqui os
+> Java, com os pacotes `main`, `lexer`, `symbols`, `parser` e `inter`; aqui os
 > mesmos conceitos aparecem em Python.
 
 ## 1. O que o livro chama de front-end
@@ -71,7 +71,9 @@ errors.py: usado por todas as fases (E1xxx léxico … E4xxx execução, ver §5
 O Apêndice A concentra tipo e geração de código **em cada nó** (abordagem
 orientada a objeto). Aqui usamos **visitantes** (`TypeChecker` e `Evaluator`)
 sobre nós que são dados puros. Vantagens: a AST fica pequena, as fases ficam
-visíveis e cada uma pode ser testada isoladamente. Ver D-05.
+visíveis e cada uma pode ser testada isoladamente. Ver D-02. O próprio Apêndice A
+chama isso de abordagem orientada a objeto × orientada a fase: a primeira facilita
+incluir construções; a segunda, que adotamos, facilita incluir ou mudar fases.
 
 ## 3. Estrutura de pacotes
 
