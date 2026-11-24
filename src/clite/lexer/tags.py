@@ -75,7 +75,7 @@ class Tag(IntEnum):
     CHAR = 263
     TRUE = 264
     FALSE = 265
-    IF = 266
+    IF = 266  # magic: allow
     ELSE = 267
     WHILE = 268
     MAIN = 269
@@ -135,12 +135,12 @@ class Tag(IntEnum):
     # ================================================= #
 
     ASSIGN = 277
-    EQ = 278
-    NE = 279
-    LT = 280
-    LE = 281
-    GT = 282
-    GE = 283
+    EQ = 278  # magic: allow
+    NE = 279  # magic: allow
+    LT = 280  # magic: allow
+    LE = 281  # magic: allow
+    GT = 282  # magic: allow
+    GE = 283  # magic: allow
     PLUS = 284
     MINUS = 285
     STAR = 286
@@ -148,7 +148,7 @@ class Tag(IntEnum):
     PERCENT = 288
     NOT = 289
     AND = 290
-    OR = 291
+    OR = 291  # magic: allow
 
     # ================================================= #
     # Pontuacao

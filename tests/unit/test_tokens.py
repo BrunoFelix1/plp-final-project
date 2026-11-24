@@ -19,6 +19,8 @@ from clite.lexer.keywords import KEYWORDS, is_reserved
 from clite.lexer.tags import Tag
 from clite.lexer.tokens import Token
 
+IDENT_COLUMN = 5
+
 # ================================================= #
 # Teste das categorias dos tokens
 # ================================================= #
@@ -91,7 +93,7 @@ def test_igualdade_tokens() -> None:
 
 def test_tokens_diferentes() -> None:
     token_a = Token(Tag.INT, "int", 1, 1)
-    token_b = Token(Tag.IDENT, "idade", 1, 5)
+    token_b = Token(Tag.IDENT, "idade", 1, IDENT_COLUMN)
 
     assert token_a != token_b
 
