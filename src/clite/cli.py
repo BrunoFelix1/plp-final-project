@@ -15,6 +15,9 @@ import argparse
 import sys
 from pathlib import Path
 
+# Codigo de saida do ticket 004: comando nao implementado ou arquivo invalido.
+EXIT_USAGE_ERROR = 2
+
 
 # ================================================= #
 # Configuracao dos argumentos
@@ -105,4 +108,4 @@ def executar_comando() -> int:
     #
     # ================================================= #
     print("E9000 não implementado", file=sys.stderr)
-    return 2
+    return EXIT_USAGE_ERROR
