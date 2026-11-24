@@ -198,7 +198,9 @@ Quando o pedido for “abrir o PR”:
 3. **Preencha o que for possível**: o que mudou, comando e resultado real,
    checklist, riscos e decisões. No que depender de julgamento humano — como o
    aprendizado pessoal — escreva “a preencher”; não invente.
-4. Mova o card para **In Review** e **não faça merge**.
+4. **Todo item de verificação deve explicar o que conferir e como conferir**;
+   itens vagos não entram no PR.
+5. Mova o card para **In Review** e **não faça merge**.
 
 ### 5.5 Checklists gerados pelo SDD
 
