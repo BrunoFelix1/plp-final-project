@@ -30,5 +30,8 @@ jobs:
       - name: Sincronizar dependências
         run: uv sync --frozen
 
+      - name: Números mágicos
+        run: uv run python -m tools.magic_numbers src tests tools scripts
+
       - name: Gate de qualidade
         run: make check
