@@ -20,6 +20,7 @@ EXIT_OK = 0
 EXIT_FINDINGS = 1
 MIN_INDEX = 0
 LINE_INDEX_OFFSET = 1
+MIN_CONSTANT_NAME_LENGTH = 3
 
 
 @dataclass(frozen=True)
@@ -35,12 +36,16 @@ class Finding:
         """Formata o achado para exibição no terminal."""
         return (
             f"{self.path}:{self.line}:{self.column}: número mágico {self.value!r}; "
-            "atribua a uma constante com nome significativo"
+            "atribua a uma constante com nome significativo (sem letras únicas)"
         )
 
 
 def _is_constant_target(target: ast.AST) -> bool:
-    return isinstance(target, ast.Name) and bool(CONSTANT_NAME.match(target.id))
+    return (
+        isinstance(target, ast.Name)
+        and len(target.id) >= MIN_CONSTANT_NAME_LENGTH
+        and bool(CONSTANT_NAME.match(target.id))
+    )
 
 
 def _in_constant_assignment(ancestors: Sequence[ast.AST]) -> bool:

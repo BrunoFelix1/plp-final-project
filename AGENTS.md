@@ -224,6 +224,10 @@ quê. Peça revisão apenas dos itens que realmente precisam do usuário.
   podem conter literais numéricos.
 - Atribua o valor a uma constante nomeada em `UPPER_SNAKE_CASE`, perto do uso:
   `MAX_TOKEN_LENGTH = 256`.
+- Nomes de uma única letra (`X`, `x`) não são aceitos, mesmo em uma constante.
+  Use um nome que explique o valor: `MAX_TOKEN_LENGTH`, `DEFAULT_PORT`.
+  O verificador exige pelo menos 3 caracteres; o revisor avalia se o nome
+  realmente explica o significado.
 - Permitidos sem constante: `0` e `1` apenas como identidades estruturais
   (índice, contador, passo) e números dentro de uma atribuição a constante.
 - Exceção pontual: `# magic: allow` na mesma linha, com justificativa no PR.

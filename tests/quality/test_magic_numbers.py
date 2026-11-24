@@ -9,6 +9,7 @@ MAGIC_VALUE = 42
 EXPECTED_ONE = 1
 EXAMPLE_NAME = "exemplo.py"
 CONSTANT_SOURCE = "MAX_SIZE = 42\n"
+SINGLE_LETTER_SOURCE = "X = 42\n"
 MAGIC_SOURCE = "def f():\n    return 42\n"
 ALLOW_SOURCE = "def f():\n    return 42  # magic: allow\n"
 INDEX_SOURCE = "def first(values):\n    return values[0]\n"
@@ -30,6 +31,11 @@ def test_detecta_numero_magico(tmp_path: Path) -> None:
 
 def test_permite_constante_nomeada(tmp_path: Path) -> None:
     assert _findings_for(CONSTANT_SOURCE, tmp_path) == []
+
+
+def test_rejeita_constante_com_letra_unica(tmp_path: Path) -> None:
+    findings = _findings_for(SINGLE_LETTER_SOURCE, tmp_path)
+    assert len(findings) == EXPECTED_ONE
 
 
 def test_permite_marcador_de_excecao(tmp_path: Path) -> None:
