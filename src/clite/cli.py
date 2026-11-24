@@ -3,25 +3,26 @@
 # Ticket 004 - Esqueleto de pacotes e CLI
 # ================================================= #
 
-# Perguntinhas bestas... ========================== #
-# Vem de onde ? para que serve esses imports?
 # ================================================= #
-# argparse --> Para receber, interpretar e validar os argumentos passados pelo usuário no terminal.
-# sys --> Permite acessar informações e recursos relacionados à execução do programa Python.
+# Imports
+# ================================================= #
+# argparse: interpreta os comandos do terminal.
+# sys: permite enviar mensagens para stderr.
+# Path: representa caminhos de arquivos e diretorios.
+# ================================================= #
+
 import argparse
 import sys
-
-# pathlib import Path --> Para trabalhar com caminhos de arquivos e diretórios de maneira orientada a objetos.
 from pathlib import Path
 
 
 # ================================================= #
 # Configuracao dos argumentos
 # def --> Declara uma função em Python
-# criar_parser --> 	Nome da função
+# criar_parser --> Nome da função
 # () --> Indica que ela não recebe parâmetros
-# -> | Indica o tipo de retorno esperado
-# argparse.ArgumentParser --> Classe do objeto que a função retornará
+# -> --> Indica o tipo de retorno esperado
+# argparse.ArgumentParser --> Classe do objeto retornado
 # : --> Inicia o bloco de instruções
 # ================================================= #
 def criar_parser() -> argparse.ArgumentParser:
