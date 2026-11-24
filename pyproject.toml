@@ -97,3 +97,6 @@ pretty = true
 [[tool.mypy.overrides]]
 module = "tests.*"
 disallow_untyped_defs = false
+
+[project.scripts]
+clite = "clite.__main__:main"
