@@ -46,7 +46,7 @@ KEYWORDS: dict[str, Tag] = {
     "char": Tag.CHAR,
     "true": Tag.TRUE,
     "false": Tag.FALSE,
-    "if": Tag.IF,
+    "if": Tag.IF_STATEMENT,
     "else": Tag.ELSE,
     "while": Tag.WHILE,
     "main": Tag.MAIN,
