@@ -63,7 +63,7 @@ class Tag(IntEnum):
     # CHAR --> Declara um tipo caractere.
     # TRUE --> Literal booleano verdadeiro.
     # FALSE --> Literal booleano falso.
-    # IF --> Estrutura condicional.
+    # IF_STATEMENT --> Estrutura condicional.
     # ELSE --> Alternativa da estrutura condicional.
     # WHILE --> Estrutura de repeticao.
     # MAIN --> Ponto de entrada do programa CLite.
@@ -75,7 +75,7 @@ class Tag(IntEnum):
     CHAR = 263
     TRUE = 264
     FALSE = 265
-    IF = 266  # magic: allow
+    IF_STATEMENT = 266
     ELSE = 267
     WHILE = 268
     MAIN = 269
@@ -118,37 +118,37 @@ class Tag(IntEnum):
     # para que o lexer consiga diferencia-los.
     # ================================================= #
     # ASSIGN --> Operador de atribuicao (=).
-    # EQ --> Operador de igualdade (==).
-    # NE --> Operador de diferenca (!=).
-    # LT --> Operador menor que (<).
-    # LE --> Operador menor ou igual (<=).
-    # GT --> Operador maior que (>).
-    # GE --> Operador maior ou igual (>=).
+    # EQUAL --> Operador de igualdade (==).
+    # NOT_EQUAL --> Operador de diferenca (!=).
+    # LESS_THAN --> Operador menor que (<).
+    # LESS_EQUAL --> Operador menor ou igual (<=).
+    # GREATER_THAN --> Operador maior que (>).
+    # GREATER_EQUAL --> Operador maior ou igual (>=).
     # PLUS --> Operador de adicao (+).
     # MINUS --> Operador de subtracao ou negacao (-).
     # STAR --> Operador de multiplicacao (*).
     # SLASH --> Operador de divisao (/).
     # PERCENT --> Operador de resto da divisao (%).
     # NOT --> Operador de negacao logica (!).
-    # AND --> Operador logico E (&&) -->Retorna verdadeiro quando as duas condicoes
-    # OR --> Operador logico OU (||).
+    # LOGICAL_AND --> Operador logico E (&&) -->Retorna verdadeiro quando as duas condicoes
+    # LOGICAL_OR --> Operador logico OU (||).
     # ================================================= #
 
     ASSIGN = 277
-    EQ = 278  # magic: allow
-    NE = 279  # magic: allow
-    LT = 280  # magic: allow
-    LE = 281  # magic: allow
-    GT = 282  # magic: allow
-    GE = 283  # magic: allow
+    EQUAL = 278
+    NOT_EQUAL = 279
+    LESS_THAN = 280
+    LESS_EQUAL = 281
+    GREATER_THAN = 282
+    GREATER_EQUAL = 283
     PLUS = 284
     MINUS = 285
     STAR = 286
     SLASH = 287
     PERCENT = 288
     NOT = 289
-    AND = 290
-    OR = 291  # magic: allow
+    LOGICAL_AND = 290
+    LOGICAL_OR = 291
 
     # ================================================= #
     # Pontuacao
