@@ -54,6 +54,7 @@ comando executado não é mesclado.
 - Siga os princípios técnicos **T0–T2** da
   [constituição](.specify/memory/constitution.md): edição cirúrgica, SOLID e
   qualidade, e TDD (Red–Green–Refactor).
+- Sem números mágicos: use constantes nomeadas e rode `make magic` (§5.6).
 - Python 3.12+, sem dependências de runtime. O parser é escrito à mão.
 - Tipagem estática em `src/` (`mypy --strict`). `Any` exige justificativa no PR.
 - Nós da AST são `dataclass` imutáveis; comportamento fica nos visitantes
@@ -213,6 +214,18 @@ contra o repositório e os artefatos gerados:
 
 Ao final, informe quantos itens foram verificados, quais continuam abertos e por
 quê. Peça revisão apenas dos itens que realmente precisam do usuário.
+
+### 5.6 Números mágicos
+
+- Nenhum número com significado de domínio pode aparecer direto no código de
+  produção ou de teste (`src/`, `tests/`, `tools/`, `scripts/`).
+- Atribua o valor a uma constante nomeada em `UPPER_SNAKE_CASE`, perto do uso:
+  `MAX_TOKEN_LENGTH = 256`.
+- Permitidos sem constante: `0` e `1` apenas como identidades estruturais
+  (índice, contador, passo) e números dentro de uma atribuição a constante.
+- Exceção pontual: `# magic: allow` na mesma linha, com justificativa no PR.
+- `make magic` e `tests/quality/test_magic_numbers.py` falham o PR com arquivo,
+  linha e valor. Rode antes de abrir ou atualizar o PR.
 
 ## 6. Limites de escopo
 
