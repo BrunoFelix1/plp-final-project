@@ -7,6 +7,8 @@ from tools.magic_numbers import Finding, find_magic_numbers, find_magic_numbers_
 REPO_ROOT_DEPTH = 2
 MAGIC_VALUE = 42
 EXPECTED_ONE = 1
+EXPECTED_LINE = 1
+EXPECTED_COLUMN = 4
 EXAMPLE_NAME = "exemplo.py"
 CONSTANT_SOURCE = "MAX_SIZE = 42\n"
 SINGLE_LETTER_SOURCE = "X = 42\n"
@@ -36,6 +38,8 @@ def test_permite_constante_nomeada(tmp_path: Path) -> None:
 def test_rejeita_constante_com_letra_unica(tmp_path: Path) -> None:
     findings = _findings_for(SINGLE_LETTER_SOURCE, tmp_path)
     assert len(findings) == EXPECTED_ONE
+    assert findings[0].line == EXPECTED_LINE
+    assert findings[0].column == EXPECTED_COLUMN
 
 
 def test_permite_marcador_de_excecao(tmp_path: Path) -> None:
