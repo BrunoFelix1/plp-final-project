@@ -4,6 +4,7 @@
 from pathlib import Path
 
 from clite.__main__ import main
+from clite.cli import EXIT_USAGE_ERROR
 
 # ================================================= #
 # Teste dos subcomandos
@@ -14,7 +15,7 @@ def test_comandos_reconhecidos(capsys) -> None:
     for comando in ("tokens", "parse", "check", "run"):
         resultado = main([comando, "inexistente.clite"])
 
-        assert resultado == 2
+        assert resultado == EXIT_USAGE_ERROR
 
     saida = capsys.readouterr()
     assert "arquivo não encontrado" in saida.err
@@ -30,7 +31,7 @@ def test_arquivo_inexistente(tmp_path: Path, capsys) -> None:
 
     saida = capsys.readouterr()
 
-    assert resultado == 2
+    assert resultado == EXIT_USAGE_ERROR
     assert "arquivo não encontrado" in saida.err
 
 
@@ -47,5 +48,5 @@ def test_comando_nao_implementado(tmp_path: Path, capsys) -> None:
 
     saida = capsys.readouterr()
 
-    assert resultado == 2
+    assert resultado == EXIT_USAGE_ERROR
     assert "E9000 não implementado" in saida.err
