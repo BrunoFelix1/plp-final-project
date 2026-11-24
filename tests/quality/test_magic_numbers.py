@@ -12,6 +12,8 @@ CONSTANT_SOURCE = "MAX_SIZE = 42\n"
 MAGIC_SOURCE = "def f():\n    return 42\n"
 ALLOW_SOURCE = "def f():\n    return 42  # magic: allow\n"
 INDEX_SOURCE = "def first(values):\n    return values[0]\n"
+CLITE_SOURCE = "int main() { int x; x = 42; }\n"
+CLITE_NAME = "programa.clite"
 
 
 def _findings_for(source: str, tmp_path: Path) -> list[Finding]:
@@ -36,6 +38,12 @@ def test_permite_marcador_de_excecao(tmp_path: Path) -> None:
 
 def test_permite_zero_como_indice(tmp_path: Path) -> None:
     assert _findings_for(INDEX_SOURCE, tmp_path) == []
+
+
+def test_ignora_programas_clite(tmp_path: Path) -> None:
+    path = tmp_path / CLITE_NAME
+    path.write_text(CLITE_SOURCE, encoding="utf-8")
+    assert find_magic_numbers([path]) == []
 
 
 def test_repositorio_sem_numeros_magicos() -> None:

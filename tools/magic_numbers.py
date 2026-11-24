@@ -1,4 +1,4 @@
-"""Detecta números mágicos em código Python do projeto."""
+"""Detecta números mágicos no código Python que implementa o interpretador."""
 
 from __future__ import annotations
 

@@ -59,7 +59,7 @@ Resultado: `__ passed` em `__ s`.
 - [ ] `docs/01` atualizado quando a gramática mudou; `docs/02` se o desenho-alvo
       da v2 mudou.
 - [ ] Sem `print` de depuração, código morto ou `TODO` órfão.
-- [ ] Sem números mágicos (`make magic`).
+- [ ] Sem números mágicos no código Python (`make magic`).
 - [ ] Tipagem em `src/` sem `Any` injustificado.
 - [ ] Ticket movido para **In Review** no board.
 

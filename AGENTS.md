@@ -217,8 +217,11 @@ quê. Peça revisão apenas dos itens que realmente precisam do usuário.
 
 ### 5.6 Números mágicos
 
-- Nenhum número com significado de domínio pode aparecer direto no código de
-  produção ou de teste (`src/`, `tests/`, `tools/`, `scripts/`).
+- Nenhum número com significado de domínio pode aparecer direto no **código
+  Python que implementa o interpretador** — produção, testes e ferramentas em
+  `src/`, `tests/`, `tools/` e `scripts/`.
+- Programas `.clite` de entrada ou teste **não** são analisados por esta regra e
+  podem conter literais numéricos.
 - Atribua o valor a uma constante nomeada em `UPPER_SNAKE_CASE`, perto do uso:
   `MAX_TOKEN_LENGTH = 256`.
 - Permitidos sem constante: `0` e `1` apenas como identidades estruturais
