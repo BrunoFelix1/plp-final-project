@@ -43,24 +43,45 @@ Closes #N
 ## Como verificar
 
 ```bash
-uv run pytest tests/unit/test_xxx.py -q   # teste do ticket
-make check                                # suíte completa
+uv run pytest tests/unit/... -q   # teste do ticket
+make check                        # lint + tipos + testes
+make magic                        # números mágicos no código Python
 ```
 
 Resultado: `__ passed` em `__ s`.
 
-- [ ] Executei o comando acima e todos os testes passaram.
-- [ ] O teste novo falha sem a implementação (quando aplicável).
-- [ ] O caso de erro foi verificado (código + linha/coluna).
+Marque cada item com evidência:
+
+- [ ] **Comandos passaram.** Rode os três comandos e cole o resultado real; o
+      `make check` precisa terminar verde.
+- [ ] **O teste novo falha sem a implementação.** Desative temporariamente a
+      mudança e rode o teste do ticket; ele deve falhar pelo motivo esperado,
+      não por erro de import ou sintaxe. Evidência: nome do teste e mensagem.
+- [ ] **Caso de erro coberto.** Localize no ticket o erro esperado (ex.:
+      `E3003`, linha 4, coluna 9) e confirme que o teste verifica código, linha
+      e coluna, não só o texto. Evidência: nome do teste e asserção.
 
 ## Checklist
 
-- [ ] O PR implementa **apenas** o ticket (sem melhorias de passagem).
-- [ ] `docs/01` atualizado quando a gramática mudou; `docs/02` se o desenho-alvo
-      da v2 mudou.
-- [ ] Sem `print` de depuração, código morto ou `TODO` órfão.
-- [ ] Tipagem em `src/` sem `Any` injustificado.
-- [ ] Ticket movido para **In Review** no board.
+- [ ] **Escopo:** o diff contém apenas o ticket.
+      Como verificar: `git diff --stat main...HEAD` e compare com “Arquivos que
+      toca” no ticket; mudança extra vira outro ticket/PR.
+- [ ] **Gramática documentada:** se o parser ou a gramática mudou, `docs/01` foi
+      atualizado no mesmo PR; `docs/02` só se o desenho-alvo da v2 mudou.
+      Como verificar: procure `docs/01-linguagem-clite.md` no diff e confira a
+      produção alterada.
+- [ ] **Sem código de depuração:** não há `print`, `breakpoint`, código morto ou
+      `TODO` órfão.
+      Como verificar: `uv run ruff check .` e busque `print(`, `breakpoint` e
+      `TODO` no diff.
+- [ ] **Tipagem:** `uv run mypy src` passa sem erro.
+      Como verificar: rode o comando; se o diff introduzir `Any`, confirme a
+      justificativa em “Riscos e decisões”.
+- [ ] **Sem números mágicos:** `make magic` passa e constantes têm nomes
+      legíveis.
+      Como verificar: rode o comando e revise os nomes das constantes no diff.
+- [ ] **Board:** o card do ticket está em **In Review**.
+      Como verificar: abra o board e confirme a coluna e o número do ticket.
 
 ## Aprendizado (3 linhas)
 
@@ -86,6 +107,8 @@ Resultado: `__ passed` em `__ s`.
 7. **Merge:** squash, mantendo o título do PR; a `main` precisa estar verde.
 8. **Após o merge:** mover o card para **Ready for QA** e escrever no ticket o
    comando que o QA deve rodar.
+9. **Itens verificáveis:** todo item de checklist deve dizer **o que conferir**
+   e **como conferir**. Não use itens vagos como “tipagem ok” ou “testes ok”.
 
 ## Checklist de revisão (para quem revisa)
 

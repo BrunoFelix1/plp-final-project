@@ -2,7 +2,7 @@
 
 > Base: *Compiladores: Princípios, Técnicas e Ferramentas*, cap. 1 (o que é o
 > front-end) e Apêndice A (um front-end completo). O Apêndice A é escrito em
-> Java, com os pacotes `main`, `lexer`, `symbol`, `parser` e `inter`; aqui os
+> Java, com os pacotes `main`, `lexer`, `symbols`, `parser` e `inter`; aqui os
 > mesmos conceitos aparecem em Python.
 
 ## 1. O que o livro chama de front-end
@@ -23,29 +23,34 @@ geração de código por avaliação direta da AST.** Continuamos sendo um front
 completo — e ganhamos um interpretador executável, que é o objetivo didático.
 
 ```text
+cli.py (entrada: `clite tokens|parse|check|run`)
+      │
 programa.clite
       │
       ▼
 ┌─────────────┐   Token(tag, lexema, linha, coluna)
 │   Lexer     │ ───────────────────────────────────────┐
-└─────────────┘                                        │
+└─────────────┘ lexer/                                 │
       ▲                                                ▼
       │                                        ┌─────────────┐
-   caracteres                                  │   Parser    │
+   caracteres                                  │   Parser    │  parser/
                                                └─────────────┘
-                                                      │ AST
+                                                      │ AST (ast/)
                                                       ▼
-                                               ┌─────────────┐
-                                               │ TypeChecker │  ← tabela de símbolos
-                                               └─────────────┘
+                                          ┌────────────────────────┐
+                                          │ Semantic (TypeChecker) │  semantic/
+                                          └────────────────────────┘  ← tabela de símbolos
+                                                      │                 (symbols.py, types.py)
                                                       │ AST validada
                                                       ▼
                                                ┌─────────────┐
-                                               │ Interpret.  │  ← estado (variáveis/objetos)
-                                               └─────────────┘
+                                               │ Interpret.  │  interpreter/
+                                               └─────────────┘  ← estado (values.py)
                                                       │
                                                       ▼
                                                 print / estado final
+
+errors.py: usado por todas as fases (E1xxx léxico … E4xxx execução, ver §5)
 ```
 
 ## 2. Mapa Apêndice A → Python
@@ -66,7 +71,9 @@ programa.clite
 O Apêndice A concentra tipo e geração de código **em cada nó** (abordagem
 orientada a objeto). Aqui usamos **visitantes** (`TypeChecker` e `Evaluator`)
 sobre nós que são dados puros. Vantagens: a AST fica pequena, as fases ficam
-visíveis e cada uma pode ser testada isoladamente. Ver D-05.
+visíveis e cada uma pode ser testada isoladamente. Ver D-02. O próprio Apêndice A
+chama isso de abordagem orientada a objeto × orientada a fase: a primeira facilita
+incluir construções; a segunda, que adotamos, facilita incluir ou mudar fases.
 
 ## 3. Estrutura de pacotes
 
@@ -113,10 +120,12 @@ não guarda tokens, só posição (`line`, `column`) para relatórios.
 
 O checker percorre a AST com um `TypeContext`:
 
-- **globais**: classes, campos, assinaturas de métodos;
-- **locais**: variáveis de `main` ou de um método;
-- **retorno**: tipo de retorno do método corrente;
-- **classe corrente**: para `this` e para resolver campos.
+- **globais** (v2): classes, campos, assinaturas de métodos;
+- **locais**: variáveis de `main` ou (v2) de um método;
+- **retorno** (v2): tipo de retorno do método corrente;
+- **classe corrente** (v2): para `this` e para resolver campos.
+
+Na v1 só existem as variáveis de `main`, num escopo único (D-06).
 
 Saída: a mesma AST anotada com `static_type` em cada expressão, ou uma lista de
 erros. Nenhuma execução acontece se houver erro de tipo.
@@ -125,13 +134,14 @@ erros. Nenhuma execução acontece se houver erro de tipo.
 
 O estado de execução tem:
 
-- `frames`: pilha de ambientes (main, chamada de método);
-- `heap`: objetos alocados por `new`;
+- `frames`: pilha de ambientes (main, chamada de método); na v1, um único
+  ambiente com as variáveis de `main` (D-06);
+- `heap` (v2): objetos alocados por `new`;
 - `output`: linhas produzidas por `print`.
 
-O avaliador devolve um valor para expressões e um estado para comandos. `return`
-é implementado com uma exceção interna `ReturnSignal`, capturada pela chamada
-de método. Erros de execução (divisão por zero, índice inválido, `undef`) viram
+O avaliador devolve um valor para expressões e um estado para comandos. (v2)
+`return` é implementado com uma exceção interna `ReturnSignal`, capturada pela
+chamada de método. Erros de execução (divisão por zero, índice inválido, `undef`) viram
 `RuntimeCliteError` com linha/coluna.
 
 ## 5. Estratégia de erros

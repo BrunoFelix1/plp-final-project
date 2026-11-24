@@ -1,7 +1,7 @@
 .DEFAULT_GOAL := help
 PY := uv run
 
-.PHONY: help install lint format types test test-cov check clean
+.PHONY: help install lint format types test test-cov magic check clean
 
 help: ## Mostra os comandos disponíveis
 	@grep -hE '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "}; {printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -25,6 +25,9 @@ test: ## Executa os testes unitários
 
 test-cov: ## Executa os testes com relatório de cobertura
 	$(PY) pytest --cov --cov-report=term-missing
+
+magic: ## Verifica números mágicos no código e nos testes
+	$(PY) -m tools.magic_numbers src tests tools scripts
 
 check: lint types test ## Executa lint, tipos e testes (mesmo conjunto do CI)
 

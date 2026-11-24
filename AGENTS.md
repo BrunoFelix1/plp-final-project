@@ -54,6 +54,7 @@ comando executado não é mesclado.
 - Siga os princípios técnicos **T0–T2** da
   [constituição](.specify/memory/constitution.md): edição cirúrgica, SOLID e
   qualidade, e TDD (Red–Green–Refactor).
+- Sem números mágicos: use constantes nomeadas e rode `make magic` (§5.6).
 - Python 3.12+, sem dependências de runtime. O parser é escrito à mão.
 - Tipagem estática em `src/` (`mypy --strict`). `Any` exige justificativa no PR.
 - Nós da AST são `dataclass` imutáveis; comportamento fica nos visitantes
@@ -197,7 +198,9 @@ Quando o pedido for “abrir o PR”:
 3. **Preencha o que for possível**: o que mudou, comando e resultado real,
    checklist, riscos e decisões. No que depender de julgamento humano — como o
    aprendizado pessoal — escreva “a preencher”; não invente.
-4. Mova o card para **In Review** e **não faça merge**.
+4. **Todo item de verificação deve explicar o que conferir e como conferir**;
+   itens vagos não entram no PR.
+5. Mova o card para **In Review** e **não faça merge**.
 
 ### 5.5 Checklists gerados pelo SDD
 
@@ -213,6 +216,25 @@ contra o repositório e os artefatos gerados:
 
 Ao final, informe quantos itens foram verificados, quais continuam abertos e por
 quê. Peça revisão apenas dos itens que realmente precisam do usuário.
+
+### 5.6 Números mágicos
+
+- Nenhum número com significado de domínio pode aparecer direto no **código
+  Python que implementa o interpretador** — produção, testes e ferramentas em
+  `src/`, `tests/`, `tools/` e `scripts/`.
+- Programas `.clite` de entrada ou teste **não** são analisados por esta regra e
+  podem conter literais numéricos.
+- Atribua o valor a uma constante nomeada em `UPPER_SNAKE_CASE`, perto do uso:
+  `MAX_TOKEN_LENGTH = 256`.
+- Nomes de uma única letra (`X`, `x`) não são aceitos, mesmo em uma constante.
+  Use um nome que explique o valor: `MAX_TOKEN_LENGTH`, `DEFAULT_PORT`.
+  O verificador exige pelo menos 3 caracteres; o revisor avalia se o nome
+  realmente explica o significado.
+- Permitidos sem constante: `0` e `1` apenas como identidades estruturais
+  (índice, contador, passo) e números dentro de uma atribuição a constante.
+- Exceção pontual: `# magic: allow` na mesma linha, com justificativa no PR.
+- `make magic` e `tests/quality/test_magic_numbers.py` falham o PR com arquivo,
+  linha e valor. Rode antes de abrir ou atualizar o PR.
 
 ## 6. Limites de escopo
 

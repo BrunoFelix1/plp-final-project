@@ -39,6 +39,7 @@ packages = ["src/clite"]
 [tool.pytest.ini_options]
 minversion = "8.0"
 testpaths = ["tests"]
+pythonpath = ["."]
 addopts = "-q --strict-markers --strict-config"
 markers = [
   "conformance: executa programas .clite de ponta a ponta",
