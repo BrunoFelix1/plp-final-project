@@ -15,7 +15,12 @@ import argparse
 import sys
 from pathlib import Path
 
+from clite.lexer.lexer import LexicalError, tokenize
+from clite.lexer.tokens import Token
+
 # Codigo de saida do ticket 004: comando nao implementado ou arquivo invalido.
+EXIT_OK = 0
+EXIT_PROGRAM_ERROR = 1
 EXIT_USAGE_ERROR = 2
 
 
@@ -101,7 +106,31 @@ def validar_arquivo(arquivo: Path) -> bool:
 # A função retorna um inteiro.  type , int é um inteiro
 #
 # ================================================= #
-def executar_comando() -> int:
+def format_token(token: Token) -> str:
+    """Formata um token como `TAG lexema linha:coluna` (ticket 008)."""
+    return f"{token.tag.name} {token.lexeme} {token.line}:{token.column}"
+
+
+def run_tokens(arquivo: Path) -> int:
+    """Imprime os tokens do arquivo; um erro léxico não deixa saída parcial."""
+    try:
+        source = arquivo.read_text(encoding="utf-8")
+    except (OSError, UnicodeDecodeError):
+        print(f"erro: não foi possível ler o arquivo: {arquivo}", file=sys.stderr)
+        return EXIT_USAGE_ERROR
+    try:
+        tokens = tokenize(source)
+    except LexicalError as error:
+        print(error, file=sys.stderr)
+        return EXIT_PROGRAM_ERROR
+    for token in tokens:
+        print(format_token(token))
+    return EXIT_OK
+
+
+def executar_comando(args: argparse.Namespace) -> int:
+    if args.comando == "tokens":
+        return run_tokens(args.arquivo)
     # ================================================= #
     # Mas por que estamos retornando 2 --> Porque o ticket 004 define que, enquanto os comandos não estiverem implementados, a CLI deverá
     # apresentar: E9000 não implementado, E devolver o código de saída 2.

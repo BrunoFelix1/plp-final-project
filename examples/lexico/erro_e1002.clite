@@ -1,0 +1,5 @@
+// erro_e1002.clite: `&` sozinho; o operador lógico é `&&` (E1002).
+int main() {
+    bool ok;
+    ok = a & b;
+}

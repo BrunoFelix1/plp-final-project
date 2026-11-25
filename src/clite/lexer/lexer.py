@@ -151,6 +151,17 @@ class Lexer:
         return self._index >= len(self._source)
 
 
+def tokenize(source: str) -> list[Token]:
+    """Varre o fonte inteiro e devolve os tokens, sem o ``EOF`` final."""
+    lexer = Lexer(source)
+    tokens: list[Token] = []
+    token = lexer.scan()
+    while token.tag is not Tag.EOF:
+        tokens.append(token)
+        token = lexer.scan()
+    return tokens
+
+
 def _is_digit(char: str) -> bool:
     return char in DIGITS
 
