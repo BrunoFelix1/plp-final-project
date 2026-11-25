@@ -22,7 +22,7 @@
 | Comentário | `// x = 1;` | ignorado até a nova linha |
 | Comentário no fim do arquivo | `int main() { } // fim` | válido |
 | Barra ambígua | `a / b` vs `a // b` | divisão vs comentário |
-| Caractere inválido | `@`, `#`, `&` sozinho | erro léxico com linha/coluna |
+| Caractere inválido | `@`, `#`, `&` sozinho | `@` e `#`: `E1001`; `&` ou `\|` sozinho: `E1002`; com linha/coluna |
 | Palavra reservada | `int while;` | erro léxico ou sintático claro |
 | Palavra da v2 na v1 | `int class;` | erro: `class` é reservada |
 

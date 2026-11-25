@@ -148,7 +148,7 @@ chamada de método. Erros de execução (divisão por zero, índice inválido, `
 
 | Fase | Código | Exemplo |
 | --- | --- | --- |
-| Léxico | `E1xxx` | caractere inesperado, float malformado, comentário aberto |
+| Léxico | `E1xxx` | caractere inesperado, float malformado, `&` ou `\|` isolado (`E1002`), comentário aberto |
 | Sintático | `E2xxx` | `;` ausente, `else` órfão, `a < b < c` |
 | Semântico | `E3xxx` | variável não declarada, tipo incompatível, override inválido |
 | Execução | `E4xxx` | divisão por zero, índice fora, uso de `undef` |
