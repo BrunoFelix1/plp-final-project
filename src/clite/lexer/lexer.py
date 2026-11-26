@@ -8,6 +8,7 @@ import string
 from collections.abc import Callable
 
 from clite.lexer.keywords import KEYWORDS
+from clite.lexer.operators import ISOLATED_PREFIXES, MAX_LEXEME_LENGTH, OPERATORS
 from clite.lexer.tags import Tag
 from clite.lexer.tokens import Token
 
@@ -20,6 +21,7 @@ EOF_LEXEME = ""
 INITIAL_LINE = 1
 INITIAL_COLUMN = 1
 ERROR_CODE = "E1001"
+ERROR_CODE_ISOLATED_OPERATOR = "E1002"
 LETTERS = string.ascii_letters
 DIGITS = string.digits
 
@@ -27,8 +29,8 @@ DIGITS = string.digits
 class LexicalError(Exception):
     """Erro léxico com código e posição no fonte (D-12)."""
 
-    def __init__(self, line: int, column: int, message: str) -> None:
-        self.code = ERROR_CODE
+    def __init__(self, line: int, column: int, message: str, code: str = ERROR_CODE) -> None:
+        self.code = code
         self.line = line
         self.column = column
         self.message = message
@@ -58,7 +60,21 @@ class Lexer:
             return self._scan_char()
         if char == DOT:
             raise LexicalError(self._line, self._column, "float exige dígito antes do ponto")
-        raise LexicalError(self._line, self._column, f"caractere inesperado: {char!r}")
+        return self._scan_symbol()
+
+    def _scan_symbol(self) -> Token:
+        line, column = self._line, self._column
+        for length in range(MAX_LEXEME_LENGTH, 0, -1):
+            lexeme = self._source[self._index : self._index + length]
+            if lexeme in OPERATORS:
+                for _ in lexeme:
+                    self._advance()
+                return Token(OPERATORS[lexeme], lexeme, line, column)
+        char = self._peek()
+        if char in ISOLATED_PREFIXES:
+            message = f"{char!r} isolado; o operador é {ISOLATED_PREFIXES[char]!r}"
+            raise LexicalError(line, column, message, ERROR_CODE_ISOLATED_OPERATOR)
+        raise LexicalError(line, column, f"caractere inesperado: {char!r}")
 
     def _scan_word(self) -> Token:
         line, column = self._line, self._column

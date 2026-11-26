@@ -130,7 +130,7 @@ def test_invalid_char_fails_at_opening_quote(source: str) -> None:
     assert (info.value.line, info.value.column) == (1, 1)
 
 
-@pytest.mark.parametrize("source", ["@", ";", "+", "("])
+@pytest.mark.parametrize("source", ["@"])
 def test_unknown_character_fails(source: str) -> None:
     with pytest.raises(LexicalError) as info:
         first_token(source)
