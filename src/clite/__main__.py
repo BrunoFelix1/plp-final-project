@@ -15,7 +15,7 @@ def main(argv: list[str] | None = None) -> int:
     if not validar_arquivo(args.arquivo):
         return EXIT_USAGE_ERROR
 
-    return executar_comando()
+    return executar_comando(args)
 
 
 if __name__ == "__main__":

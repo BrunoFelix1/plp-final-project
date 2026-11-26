@@ -44,7 +44,7 @@ def test_comando_nao_implementado(tmp_path: Path, capsys) -> None:
     arquivo = tmp_path / "programa.clite"
     arquivo.write_text("int main() {}", encoding="utf-8")
 
-    resultado = main(["tokens", str(arquivo)])
+    resultado = main(["parse", str(arquivo)])
 
     saida = capsys.readouterr()
 

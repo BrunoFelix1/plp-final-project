@@ -1,0 +1,5 @@
+// basico.clite: programa mínimo para ver os tokens com `clite tokens`.
+int main() {
+    int x;
+    x = 1 + 2;
+}
