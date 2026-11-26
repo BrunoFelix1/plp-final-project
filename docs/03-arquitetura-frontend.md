@@ -179,6 +179,10 @@ clite run     programa.clite --dump-state   # estado final das variáveis
 Códigos de saída: `0` sucesso, `1` erro de programa (léxico/sintático/tipo),
 `2` erro de uso da CLI.
 
+`clite tokens` imprime uma linha por token, `TAG lexema linha:coluna`; o `EOF` não é
+impresso. Em erro léxico, escreve uma linha `erro E1xxx (...)` em stderr, deixa stdout
+vazio e sai com `1`. Entradas em `examples/lexico/`; saídas esperadas em `tests/golden/lexer/`.
+
 ## 7. Testes
 
 | Nível | O que cobre | Como |

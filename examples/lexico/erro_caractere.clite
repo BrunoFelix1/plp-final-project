@@ -1,0 +1,5 @@
+// erro_caractere.clite: `@` não existe no alfabeto do CLite (E1001).
+int main() {
+    int x;
+    x = 1 @ 2;
+}

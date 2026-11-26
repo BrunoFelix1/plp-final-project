@@ -1,0 +1,15 @@
+// literais.clite: inteiro, float, booleano, char (inclusive o espaço) e palavras reservadas.
+int main() {
+    int n;
+    float f;
+    bool ok;
+    char c;
+    n = 42;
+    f = 3.14;
+    ok = true;
+    c = 'a';
+    c = ' ';
+    while (n > 0) {
+        n = n - 1;
+    }
+}
